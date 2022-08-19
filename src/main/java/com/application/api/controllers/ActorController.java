@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
 
 import javax.xml.bind.ValidationException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController // essa clase vai receber as requisicoes HTTP
 @RequestMapping("/api/V1.0/disenioDeSistemas/actor")
@@ -31,6 +33,15 @@ public class ActorController {
     @Autowired
     public ActorController(IActorService actorService){
         this.actorService=actorService;
+    }
+
+    @GetMapping
+    @Operation(summary = "Trae a todos los actores de la BD")
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200",description = "ok todo los actores")
+    })
+    public ResponseEntity<List<ActorVO>> getJugadoresVO(){
+        return ResponseEntity.ok(converterActoresToVo(actorService.getTodoLosActores()));
     }
 
     @GetMapping("/{id}")
@@ -51,6 +62,9 @@ public class ActorController {
         return new ResponseEntity<>(convertorActorToVo(actorService.guardarActor(actorVO)), HttpStatus.CREATED);
     }
 
+    private  List<ActorVO>converterActoresToVo(List<Actor> actores){
+        return actores.stream().map(this::convertorActorToVo).collect(Collectors.toList());
+    }
     private ActorVO convertorActorToVo(Actor actor){
         return new ActorVO(actor);
     }

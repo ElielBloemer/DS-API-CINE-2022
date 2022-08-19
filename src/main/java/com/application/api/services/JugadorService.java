@@ -6,8 +6,10 @@ import com.application.api.persistance.JugadorRepository;
 import com.application.api.services.interfaces.IJugadorService;
 import com.application.api.vo.JugadorVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+@Service
 public class JugadorService implements IJugadorService {
 
     private JugadorRepository jugadorRepository;

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.util.List;
+
 //Essa capa eu divido das capas de servicio com persistencia, etc.
 @Service
 public class ActorService implements IActorService {
@@ -36,6 +38,11 @@ public class ActorService implements IActorService {
         String nombreMayusculo = nombre.toUpperCase();
         String peliculaMayuscula = pelicula.toUpperCase();
         return actorRepository.save(new Actor(nombreMayusculo,peliculaMayuscula));
+    }
+
+    @Override
+    public List<Actor> getTodoLosActores() {
+        return (List<Actor>) actorRepository.findAll();
     }
 
 }

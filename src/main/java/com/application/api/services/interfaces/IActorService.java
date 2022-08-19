@@ -3,6 +3,8 @@ package com.application.api.services.interfaces;
 import com.application.api.vo.ActorVO;
 import com.application.api.model.evento.Actor;
 
+import java.util.List;
+
 //Aqui e onde eu implemento uma interface
 public interface IActorService {
 
@@ -11,4 +13,6 @@ public interface IActorService {
    Actor guardarActor(ActorVO actorVO);
 
    Actor guardarActor(String nombre,String pelicula);
+
+   List<Actor> getTodoLosActores();
 }
