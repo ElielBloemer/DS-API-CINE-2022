@@ -32,6 +32,7 @@ public class ActorController {
 
     @Autowired
     public ActorController(IActorService actorService){
+
         this.actorService=actorService;
     }
 

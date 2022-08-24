@@ -3,7 +3,7 @@ package com.application.api.vo;
 import com.application.api.model.evento.Actor;
 
 public class ActorVO {
-
+ 
     public Integer id;
     public String nombre;
 
