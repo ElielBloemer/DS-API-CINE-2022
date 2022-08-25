@@ -23,6 +23,7 @@ public class Seleccion {
     private List<Jugador> jugadorTitulares;
     private Integer mundialesGanados;
 
+
     public Seleccion(String nombrePais,String continente, List<Jugador> jugadores, Integer mundialesGanados){
         this.nombrePais = nombrePais;
         this.continente = continente;

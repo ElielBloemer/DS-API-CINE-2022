@@ -7,7 +7,9 @@ public interface IJugadorService {
 
     Jugador getJugadorById(Integer id);
 
+    Jugador getJugadorByNombre(String nombre);
+
     Jugador guardarJugador(JugadorVO jugadorVO);
 
-    Jugador guardarJugador(String nombre);
+    Jugador guardarJugador(String nombre,boolean esEstrella,String nombreSeleccion);
 }

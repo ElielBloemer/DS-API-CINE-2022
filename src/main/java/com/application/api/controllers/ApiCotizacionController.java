@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api/V1.0/disenioDeSistemas")
-@Tag(name = "Api controller",description = "Controller criado para gestionar la cotizacion del Dolar")
+@Tag(name = "Api controller",description = "CONTROLLER CRIADO PARA GESTIONAR LA COTIZACION DEL DOLAR BLUE")
 @CrossOrigin(origins = "*")
 @ApiResponses({// aqui e digo os tipos de erros que podem devolver
         @ApiResponse(responseCode =  "400",description = "bad request"),

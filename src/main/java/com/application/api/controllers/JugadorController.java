@@ -5,6 +5,7 @@ import com.application.api.model.evento.Jugador;
 import com.application.api.services.interfaces.IJugadorService;
 import com.application.api.vo.ActorVO;
 import com.application.api.vo.JugadorVO;
+import com.application.api.vo.SeleccionVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -19,7 +20,7 @@ import javax.xml.bind.ValidationException;
 
 @RestController // essa clase vai receber as requisicoes HTTP
 @RequestMapping("/api/V1.0/disenioDeSistemas/jugador")
-@Tag(name = "Jugador controller",description = "Controller criado para gestionar los jugadores usados")
+@Tag(name = "Jugador controller",description = "CONTROLLER CRIADO PARA MANEJAR JUGADORES")
 @CrossOrigin(origins = "*")
 @ApiResponses({// aqui e digo os tipos de erros que podem devolver
         @ApiResponse(responseCode =  "400",description = "bad request"),
@@ -35,13 +36,15 @@ public class JugadorController {
         this.jugadorService=jugadorService;
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary= "trae jugador por id")
+    @GetMapping("/{nombre}")
+    @Operation(summary= "trae jugador por nombre")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = " ok jugador entregue")
     })
-    public ResponseEntity<JugadorVO> getJugadorVOById(@PathVariable Integer id) throws NotFoundException {
-        return ResponseEntity.ok(convertorJugadorToVO(jugadorService.getJugadorById(id)));
+    public ResponseEntity<Object> getJugador(@RequestParam String nombreJugador) {
+        Jugador jugador = jugadorService.getJugadorByNombre(nombreJugador);
+        JugadorVO response= new JugadorVO(jugador);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

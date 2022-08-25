@@ -7,7 +7,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SeleccionRepository extends CrudRepository<Seleccion,Long> {
+public interface SeleccionRepository extends JpaRepository<Seleccion,Long> {
 
-    Seleccion findByName(String nombre);
+   public Seleccion findByNombrePais(String nombrePais);
+
+   //public List<Seleccion> findByContinente(String continente);
 }

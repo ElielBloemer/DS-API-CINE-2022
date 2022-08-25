@@ -10,10 +10,15 @@ public interface ISeleccionService {
 
     Seleccion getSeleccionPorNombre(String name);
 
-    //Seleccion guardarSeleccion(SeleccionVO selecioVO);
-
+    Seleccion guardarSeleccion(SeleccionVO selecioVO);
     Seleccion guardarSeleccion(String nombrePais, String continente, List<Jugador> jugadores, Integer mundialesGanados);
 
-    Boolean contieneJugadorEstrella(String nombreSelecion);
+    ///Seleccion guardarSeleccion(String nombrePais, String continente, Integer mundialesGanados);
+
+    boolean contieneJugadorEstrella(String nombreSelecion);
+
+    boolean esMuyCampeona(String nombreSeleccion);
+
+    public void validarInformacion(String nombrePais);
 
 }

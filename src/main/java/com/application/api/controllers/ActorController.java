@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController // essa clase vai receber as requisicoes HTTP
 @RequestMapping("/api/V1.0/disenioDeSistemas/actor")
-@Tag(name = "Actor controller",description = "Controller criado para gestionar los actores usados")
+@Tag(name = "Actor controller",description = "CONTROLLER CRIADO PARA MANEJAR LOS ACTORES")
 @CrossOrigin(origins = "*")
 @ApiResponses({// aqui e digo os tipos de erros que podem devolver
         @ApiResponse(responseCode =  "400",description = "bad request"),

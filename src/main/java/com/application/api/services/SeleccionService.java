@@ -1,13 +1,11 @@
 package com.application.api.services;
 
-import com.application.api.controllers.SeleccionController;
 import com.application.api.model.evento.Jugador;
 import com.application.api.model.evento.Seleccion;
+import com.application.api.persistance.JugadorRepository;
 import com.application.api.persistance.SeleccionRepository;
 import com.application.api.services.interfaces.ISeleccionService;
 import com.application.api.vo.SeleccionVO;
-import org.hibernate.boot.spi.InFlightMetadataCollector;
-import org.omg.PortableInterceptor.ORBInitInfoPackage.DuplicateName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
@@ -19,6 +17,13 @@ public class SeleccionService implements ISeleccionService {
 
     private SeleccionRepository seleccionRepository;
 
+    private JugadorRepository jugadorRepository;
+
+    @Autowired
+    public void setJugadorService(JugadorRepository jugadorRepository){
+        this.jugadorRepository=jugadorRepository;
+    }
+
     @Autowired
     public void setSeleccionService(SeleccionRepository seleccionRepository){
         this.seleccionRepository=seleccionRepository;
@@ -26,28 +31,62 @@ public class SeleccionService implements ISeleccionService {
 
     @Override
     public Seleccion getSeleccionPorNombre(String nombre) {
-        Seleccion seleccion = seleccionRepository.findByName(nombre);
-        seleccionExiste(seleccion,nombre);
+        Seleccion seleccion = seleccionRepository.findByNombrePais(nombre.toUpperCase());
+        seleccionExiste(seleccion,nombre.toUpperCase());
+        List<Jugador> jugadores = jugadorRepository.findByNombreSeleccion(nombre.toUpperCase());
+        seleccion.setJugadorTitulares(existenJugadores(jugadores));
         return seleccion;
     }
 
+    private List<Jugador> existenJugadores(List<Jugador> jugadores) {
+        if(jugadores==null){
+            return null;
+        }else {
+            return jugadores;}
+    }
+
     @Override
-    public Seleccion guardarSeleccion(String nombrePais, String continente, List<Jugador> jugadores, Integer mundialesGanados) {
-        Seleccion nuevaSeleccion = seleccionRepository.findByName(nombrePais);
-        estaEnElSistema(nuevaSeleccion,nombrePais);
+    public Seleccion guardarSeleccion(SeleccionVO selecioVO) {
+        return guardarSeleccion(selecioVO.nombrePais,selecioVO.continente,null,selecioVO.mundialesGanados);
+    }
+
+    @Override
+    public Seleccion guardarSeleccion(String nombrePais, String continente,List<Jugador> jugadores, Integer mundialesGanados) {
         String nombreMayusculo= nombrePais.toUpperCase();
+        Seleccion nuevaSeleccion = seleccionRepository.findByNombrePais(nombreMayusculo);
+        estaEnElSistema(nuevaSeleccion,nombrePais);
         String continenteMayusculo=continente.toUpperCase();
         return seleccionRepository.save(new Seleccion(nombreMayusculo,continenteMayusculo,jugadores,mundialesGanados));
     }
 
     @Override
-    public Boolean contieneJugadorEstrella(String nombreSelecion) {
-        return null;
+    public boolean contieneJugadorEstrella(String nombreSelecion) {
+        Seleccion seleccion = getSeleccionPorNombre(nombreSelecion);
+        List<Jugador> jugadores = seleccion.getJugadorTitulares();
+        for ( Jugador jugador: jugadores) {
+            if(jugador.isEsEstrella()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean esMuyCampeona(String nombreSeleccion) {
+        Seleccion seleccion = getSeleccionPorNombre(nombreSeleccion);
+        return seleccion.getMundialesGanados() >= 5;
+    }
+
+    @Override
+    public void validarInformacion(String nombrePais) {
+            if(nombrePais.equals("STRING")){
+                throw new NotFoundException("Nombre INVALIDO para la seleccion");
+            }
     }
 
     public void seleccionExiste(Seleccion seleccion,String nombreSelecion){
         if(seleccion==null){
-            throw new NotFoundException("La Seleccion com nombre "+ nombreSelecion + "no existe en el sistema");
+            throw new NotFoundException("La Seleccion com nombre "+ nombreSelecion + " NO existe en el sistema");
         }
     }
 
