@@ -45,13 +45,13 @@ public class ActorController {
         return ResponseEntity.ok(converterActoresToVo(actorService.getTodoLosActores()));
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary= "trae actores por id")
+    @GetMapping("/{nombre}")
+    @Operation(summary= "trae un actor por su nombre")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = " ok actor entregue")
     })
-    public ResponseEntity<ActorVO>getActorVOById(@PathVariable Integer id) throws NotFoundException{
-        return ResponseEntity.ok(convertorActorToVo(actorService.getActorById(id)));
+    public ResponseEntity<ActorVO>getActorVOById(@PathVariable String nombreActor) throws NotFoundException{
+        return ResponseEntity.ok(convertorActorToVo(actorService.getActorByNombre(nombreActor)));
     }
 
     @PostMapping

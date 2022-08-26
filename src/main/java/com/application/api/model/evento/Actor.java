@@ -14,12 +14,14 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nombre;
+    private String nombreActor;
     private String pelicula;
 
-    public Actor(String nombre, String pelicula) {
-        this.nombre = nombre;
+    private boolean esEstrella;
+    public Actor(String nombreActor, String pelicula,boolean esEstrella) {
+        this.nombreActor = nombreActor;
         this.pelicula = pelicula;
+        this.esEstrella=esEstrella;
     }
 
 }

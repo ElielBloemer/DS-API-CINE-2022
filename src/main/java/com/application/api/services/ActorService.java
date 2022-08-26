@@ -23,21 +23,34 @@ public class ActorService implements IActorService {
     }
 
     //Aqui disponibilizo o actor por id
+   // @Override
+    //public Actor getActorByNombre(String nombreActor) {
+      //  return actorRepository.findByNombreActor(nombreActor).orElseThrow(()-> new NotFoundException("el Actor com id: "+ id +" no existe"));
+    //}
+
     @Override
-    public Actor getActorById(Integer id) {
-        return actorRepository.findById(id).orElseThrow(()-> new NotFoundException("el Actor com id: "+ id +" no existe"));
+    public Actor getActorByNombre(String nombreActor) {
+        Actor actor=actorRepository.findByNombreActor(nombreActor);
+        actorExiste(actor,nombreActor);
+        return actor;
+    }
+
+    private void actorExiste(Actor actor, String nombreActor) {
+        if(actor==null){
+            throw new NotFoundException(nombreActor + " NO esta en el sistema.");
+        }
     }
 
     @Override
     public Actor guardarActor(ActorVO actorVO) {
-        return guardarActor(actorVO.nombre, actorVO.pelicula);
+        return guardarActor(actorVO.nombreActor, actorVO.pelicula,actorVO.esEstrella);
     }
 
     @Override
-    public Actor guardarActor(String nombre, String pelicula) {
+    public Actor guardarActor(String nombre, String pelicula,boolean esEstrella) {
         String nombreMayusculo = nombre.toUpperCase();
         String peliculaMayuscula = pelicula.toUpperCase();
-        return actorRepository.save(new Actor(nombreMayusculo,peliculaMayuscula));
+        return actorRepository.save(new Actor(nombreMayusculo,peliculaMayuscula,esEstrella));
     }
 
     @Override

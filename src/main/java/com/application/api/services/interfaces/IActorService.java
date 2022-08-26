@@ -8,11 +8,13 @@ import java.util.List;
 //Aqui e onde eu implemento uma interface para desenvolvcer a logica de negocios
 public interface IActorService {
 
-   Actor getActorById(Integer id);
+   //public Actor getActorById(Integer id);
 
-   Actor guardarActor(ActorVO actorVO);
+   public Actor getActorByNombre(String nombreActor);
 
-   Actor guardarActor(String nombre,String pelicula);
+   public Actor guardarActor(ActorVO actorVO);
 
-   List<Actor> getTodoLosActores();
+   public Actor guardarActor(String nombre,String pelicula,boolean esEstrella);
+
+   public List<Actor> getTodoLosActores();
 }

@@ -16,23 +16,23 @@ public class JugadorService implements IJugadorService {
 
     private JugadorRepository jugadorRepository;
 
-    private SeleccionRepository seleccionRepository;
+    //private SeleccionRepository seleccionRepository;
 
     @Autowired
     public void setJugadorRepository(JugadorRepository jugadorRepository) {
         this.jugadorRepository = jugadorRepository;
     }
 
-    @Autowired
+    /*@Autowired
     public void setSeleccionService(SeleccionRepository seleccionRepository){
         this.seleccionRepository=seleccionRepository;
-    }
+    }*/
 
-    @Override
-    public Jugador getJugadorById(Integer id) {
+    //@Override
+    //public Jugador getJugadorById(Integer id) {
         //return jugadorRepository.findById(id).orElseThrow(()-> new NotFoundException(" El jugador com el id: "+id+"no existe en nuestro registros"));
-        return null;
-    }
+      //  return null;
+    //}
 
     @Override
     public Jugador getJugadorByNombre(String nombreJugador) {
@@ -43,7 +43,7 @@ public class JugadorService implements IJugadorService {
 
     @Override
     public Jugador guardarJugador(JugadorVO jugadorVO) {
-        return guardarJugador(jugadorVO.nombre, jugadorVO.esEstrella, jugadorVO.nombreSeleccion);
+        return guardarJugador(jugadorVO.nombre.toUpperCase(), jugadorVO.esEstrella, jugadorVO.nombreSeleccion);
     }
 
     @Override
@@ -51,8 +51,6 @@ public class JugadorService implements IJugadorService {
          String nombreMayusculo = nombre.toUpperCase();
          String nombreSeleccionMayusculo = nombreSeleccion.toUpperCase();
          Jugador jugador=jugadorRepository.findByNombreJugador(nombreMayusculo);
-        // Seleccion seleccion=seleccionRepository.findByNombrePais(nombreMayusculo);
-        // esaSeleccionEstaEnElSistema(seleccion,nombreSeleccionMayusculo);
          estaEnElSistema(jugador,nombre);
         return jugadorRepository.save(new Jugador(nombreMayusculo,esEstrella,nombreSeleccionMayusculo));
     }

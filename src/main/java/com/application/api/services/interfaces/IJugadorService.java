@@ -5,7 +5,7 @@ import com.application.api.vo.JugadorVO;
 
 public interface IJugadorService {
 
-    Jugador getJugadorById(Integer id);
+    //Jugador getJugadorById(Integer id);
 
     Jugador getJugadorByNombre(String nombre);
 
