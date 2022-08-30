@@ -56,9 +56,8 @@ public class JugadorService implements IJugadorService {
     }
 
     private void esaSeleccionEstaEnElSistema(Seleccion seleccion, String nombreSeleccionMayusculo) {
-        if(seleccion==null){
-            throw new NotFoundException("La Seleccion com nombre "+ nombreSeleccionMayusculo + " no existe en el sistema");
-        }
+        if(seleccion==null)
+            throw new NotFoundException("La Seleccion com nombre "+nombreSeleccionMayusculo+" no existe en el sistema");
     }
 
     private void estaEnElSistema(Jugador jugador, String nombreJugador) {
@@ -68,7 +67,6 @@ public class JugadorService implements IJugadorService {
 
     private void jugadorExiste(Jugador jugador,String nombreJugador) {
         if(jugador==null)
-            throw new NotFoundException("Jugador: "+ nombreJugador+" no existe en el sistema");
-
+            throw new NotFoundException("Jugador: "+nombreJugador+" no existe en el sistema");
     }
 }

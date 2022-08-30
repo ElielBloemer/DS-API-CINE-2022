@@ -17,7 +17,6 @@ public class Jugador {
     private Integer id;
     private String nombreJugador;
     private boolean esEstrella;
-
     private String nombreSeleccion;
     public Jugador(String nombre,boolean esEstrella,String nombreSeleccion){
         this.nombreJugador=nombre;

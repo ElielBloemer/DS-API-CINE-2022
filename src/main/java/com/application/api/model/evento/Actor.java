@@ -15,12 +15,11 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombreActor;
-    private String pelicula;
-
+    private String nombrePelicula;
     private boolean esEstrella;
-    public Actor(String nombreActor, String pelicula,boolean esEstrella) {
+    public Actor(String nombreActor, String nombrePelicula,boolean esEstrella) {
         this.nombreActor = nombreActor;
-        this.pelicula = pelicula;
+        this.nombrePelicula = nombrePelicula;
         this.esEstrella=esEstrella;
     }
 

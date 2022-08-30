@@ -39,6 +39,7 @@ public class SeleccionController {
     public ResponseEntity<SeleccionVO> guardarUnaSellecion(@RequestBody SeleccionVO seleccionVO){
         seleccionService.validarInformacion(seleccionVO.nombrePais.toUpperCase());
         Seleccion seleccion = seleccionService.guardarSeleccion(seleccionVO.nombrePais,seleccionVO.continente,null,seleccionVO.mundialesGanados);
+
         SeleccionVO response = new SeleccionVO(seleccion);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
    }

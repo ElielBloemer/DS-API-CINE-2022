@@ -11,9 +11,7 @@ public interface ISeleccionService {
     Seleccion getSeleccionPorNombre(String name);
 
     Seleccion guardarSeleccion(SeleccionVO selecioVO);
-    Seleccion guardarSeleccion(String nombrePais, String continente, List<Jugador> jugadores, Integer mundialesGanados);
-
-    ///Seleccion guardarSeleccion(String nombrePais, String continente, Integer mundialesGanados);
+    Seleccion guardarSeleccion(String nombrePais, String continente,List<Jugador> jugadores,Integer mundialesGanados);
 
     boolean contieneJugadorEstrella(String nombreSelecion);
 

@@ -13,7 +13,7 @@ public class ActorVO {
     public ActorVO(Actor actor) {
         this.id = actor.getId();
         this.nombreActor = actor.getNombreActor();
-        this.pelicula = actor.getPelicula();
+        this.pelicula = actor.getNombrePelicula();
         this.esEstrella=actor.isEsEstrella();
     }
 

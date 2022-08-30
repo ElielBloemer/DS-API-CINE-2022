@@ -48,7 +48,7 @@ public class JugadorController {
     }
 
     @PostMapping
-    @Operation(summary = "Crio jugador na base de datos")
+    @Operation(summary = "Crio jugador na BD")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "jugador criado con exito")
     })
@@ -60,3 +60,16 @@ public class JugadorController {
         return new JugadorVO(jugador);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

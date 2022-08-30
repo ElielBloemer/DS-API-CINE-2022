@@ -39,10 +39,7 @@ public class SeleccionService implements ISeleccionService {
     }
 
     private List<Jugador> existenJugadores(List<Jugador> jugadores) {
-        if(jugadores==null){
-            return null;
-        }else {
-            return jugadores;}
+        return jugadores;
     }
 
     @Override
@@ -92,7 +89,7 @@ public class SeleccionService implements ISeleccionService {
 
     public void estaEnElSistema(Seleccion seleccion,String nombre) {
         if (seleccion != null) {
-            throw new NotFoundException("la seleccion" + nombre + " ya esta en el sistema!");
+            throw new NotFoundException("la seleccion " + nombre + " ya esta en el sistema!");
         }
     }
 }

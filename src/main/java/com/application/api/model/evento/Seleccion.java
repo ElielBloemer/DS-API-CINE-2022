@@ -1,10 +1,8 @@
 package com.application.api.model.evento;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -22,7 +20,6 @@ public class Seleccion {
     @OneToMany
     private List<Jugador> jugadorTitulares;
     private Integer mundialesGanados;
-
 
     public Seleccion(String nombrePais,String continente, List<Jugador> jugadores, Integer mundialesGanados){
         this.nombrePais = nombrePais;

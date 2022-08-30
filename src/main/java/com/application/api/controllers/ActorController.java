@@ -32,30 +32,29 @@ public class ActorController {
 
     @Autowired
     public ActorController(IActorService actorService){
-
         this.actorService=actorService;
     }
 
-    @GetMapping
+   /* @GetMapping
     @Operation(summary = "Trae a todos los actores de la BD")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200",description = "ok todo los actores")
     })
     public ResponseEntity<List<ActorVO>> getJugadoresVO(){
-        return ResponseEntity.ok(converterActoresToVo(actorService.getTodoLosActores()));
+        return null;// ResponseEntity.ok(converterActoresToVo(actorService.getTodoLosActores()));
     }
-
-    @GetMapping("/{nombre}")
+*/
+    @GetMapping("/{nombreActor}")
     @Operation(summary= "trae un actor por su nombre")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = " ok actor entregue")
     })
-    public ResponseEntity<ActorVO>getActorVOById(@PathVariable String nombreActor) throws NotFoundException{
+    public ResponseEntity<ActorVO>getActorVOById(@RequestParam String nombreActor) throws NotFoundException{
         return ResponseEntity.ok(convertorActorToVo(actorService.getActorByNombre(nombreActor)));
     }
 
     @PostMapping
-    @Operation(summary = "Crio actores na base de datos")
+    @Operation(summary = "Crio actor na BD")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "actor criado con exito")
     })
@@ -63,11 +62,21 @@ public class ActorController {
         return new ResponseEntity<>(convertorActorToVo(actorService.guardarActor(actorVO)), HttpStatus.CREATED);
     }
 
-    private  List<ActorVO>converterActoresToVo(List<Actor> actores){
-        return actores.stream().map(this::convertorActorToVo).collect(Collectors.toList());
-    }
     private ActorVO convertorActorToVo(Actor actor){
         return new ActorVO(actor);
     }
 
+    private  List<ActorVO>converterActoresToVo(List<Actor> actores){
+        return actores.stream().map(this::convertorActorToVo).collect(Collectors.toList());
+    }
+
+
 }
+
+
+
+
+
+
+
+
