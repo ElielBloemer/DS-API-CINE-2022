@@ -1,5 +1,6 @@
 package com.application.api.model.evento;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 
@@ -15,11 +16,14 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombreActor;
-    private String nombrePelicula;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Pelicula pelicula;
+    //private String nombrePelicula;
     private boolean esEstrella;
-    public Actor(String nombreActor, String nombrePelicula,boolean esEstrella) {
+    public Actor(String nombreActor,boolean esEstrella,Pelicula pelicula) {
         this.nombreActor = nombreActor;
-        this.nombrePelicula = nombrePelicula;
+        this.pelicula = pelicula;
         this.esEstrella=esEstrella;
     }
 

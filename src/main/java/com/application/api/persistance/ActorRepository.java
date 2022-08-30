@@ -11,5 +11,5 @@ import java.util.List;
 public interface ActorRepository extends JpaRepository<Actor,Long> {
        public Actor findByNombreActor(String nombreActor);
 
-       public List<Actor> findByNombrePelicula(String nombrePelicula);
+       //public List<Actor> findByNombrePelicula(String nombrePelicula);
 }

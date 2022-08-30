@@ -9,7 +9,6 @@ public class JugadorVO {
 
     public String nombre;
     public boolean esEstrella;
-
     public String nombreSeleccion;
     public JugadorVO() {
     }
@@ -18,7 +17,7 @@ public class JugadorVO {
         this.id = jugador.getId();
         this.nombre = jugador.getNombreJugador();
         this.esEstrella = jugador.isEsEstrella();
-        this.nombreSeleccion= jugador.getNombreSeleccion();
+        this.nombreSeleccion= jugador.getSeleccion().getNombrePais();
     }
 
     public JugadorVO(String nombreJugador,boolean esEstrella,String nombreSeleccion){

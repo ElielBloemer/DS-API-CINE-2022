@@ -33,8 +33,8 @@ public class SeleccionService implements ISeleccionService {
     public Seleccion getSeleccionPorNombre(String nombre) {
         Seleccion seleccion = seleccionRepository.findByNombrePais(nombre.toUpperCase());
         seleccionExiste(seleccion,nombre.toUpperCase());
-        List<Jugador> jugadores = jugadorRepository.findByNombreSeleccion(nombre.toUpperCase());
-        seleccion.setJugadorTitulares(existenJugadores(jugadores));
+        //List<Jugador> jugadores = jugadorRepository.findByNombreSeleccion(nombre.toUpperCase());
+        //seleccion.setJugadorTitulares(existenJugadores(jugadores));
         return seleccion;
     }
 

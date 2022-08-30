@@ -1,5 +1,7 @@
 package com.application.api.services;
 
+import com.application.api.model.evento.Pelicula;
+import com.application.api.persistance.PeliculaRepository;
 import com.application.api.vo.ActorVO;
 import com.application.api.model.evento.Actor;
 import com.application.api.persistance.ActorRepository;
@@ -14,6 +16,12 @@ import java.util.List;
 public class ActorService implements IActorService {
     //Aqui é onde eu declaro a variavel para para injectar
     private ActorRepository actorRepository;
+    private PeliculaRepository peliculaRepository;
+
+    @Autowired
+    public void setPeliculaRepository(PeliculaRepository peliculaRepository){
+        this.peliculaRepository=peliculaRepository;
+    }
 
     //Aqui e onde eu traigo o ator do BD
     @Autowired
@@ -24,27 +32,35 @@ public class ActorService implements IActorService {
     @Override
     public Actor getActorByNombre(String nombreActor) {
         Actor actor=actorRepository.findByNombreActor(nombreActor);
-        actorExiste(actor,nombreActor);
+       // actorExiste(actor,nombreActor);
+        validacion(actor,nombreActor," NO figura en el sistema. GRACIAS");
         return actor;
     }
 
-    private void actorExiste(Actor actor, String nombreActor) {
+  /*  private void actorExiste(Actor actor, String nombreActor) {
         if(actor==null){
             throw new NotFoundException(nombreActor + " NO esta en el sistema.");
         }
     }
-
+*/
     @Override
     public Actor guardarActor(ActorVO actorVO) {
         return guardarActor(actorVO.nombreActor, actorVO.pelicula,actorVO.esEstrella);
     }
 
     @Override
-    public Actor guardarActor(String nombre, String pelicula,boolean esEstrella) {
-        String nombreMayusculo = nombre.toUpperCase();
-        String peliculaMayuscula = pelicula.toUpperCase();
-        estaEnElSistemaElActor(actorRepository.findByNombreActor(nombre.toUpperCase()),nombre);
-        return actorRepository.save(new Actor(nombreMayusculo,peliculaMayuscula,esEstrella));
+    public Actor guardarActor(String nombre, String nombrePelicula,boolean esEstrella) {
+        Pelicula pelicula = peliculaRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
+        validacion(pelicula,nombrePelicula," NO figura en el sistema, POR FAVOR inserte la pelicula PRIMERO.");
+        Actor actor = actorRepository.findByNombreActor(nombre.toUpperCase());
+        estaEnElSistemaElActor(actor,nombre);
+        return actorRepository.save(new Actor(nombre.toUpperCase(),esEstrella,pelicula));
+    }
+
+    private void validacion(Object object, String nombrePelicula,String mensajeAMostrarPorConsola) {
+        if(object==null){
+            throw new NullPointerException(nombrePelicula +mensajeAMostrarPorConsola);
+        }
     }
 
     private void estaEnElSistemaElActor(Actor byNombreActor, String nombre) {
@@ -55,14 +71,9 @@ public class ActorService implements IActorService {
 
     @Override
     public List<Actor> getTodoLosActores(String nombrePelicula) {
-        List<Actor> actores=actorRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
-        return null;
+        //List<Actor> actores=actorRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
+        Pelicula pelicula=peliculaRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
+        return pelicula.getElenco();
     }
-
-    /*@Override
-    public List<Actor> getTodoLosActores() {
-        //return (List<Actor>) actorRepository.findAll();
-        return null;
-    }*/
 
 }

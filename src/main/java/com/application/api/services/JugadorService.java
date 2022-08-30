@@ -16,17 +16,17 @@ public class JugadorService implements IJugadorService {
 
     private JugadorRepository jugadorRepository;
 
-    //private SeleccionRepository seleccionRepository;
+    private SeleccionRepository seleccionRepository;
 
     @Autowired
     public void setJugadorRepository(JugadorRepository jugadorRepository) {
         this.jugadorRepository = jugadorRepository;
     }
 
-    /*@Autowired
-    public void setSeleccionService(SeleccionRepository seleccionRepository){
+    @Autowired
+    public void setSeleccionRepository(SeleccionRepository seleccionRepository){
         this.seleccionRepository=seleccionRepository;
-    }*/
+    }
 
     //@Override
     //public Jugador getJugadorById(Integer id) {
@@ -48,21 +48,22 @@ public class JugadorService implements IJugadorService {
 
     @Override
     public Jugador guardarJugador(String nombre,boolean esEstrella,String nombreSeleccion) {
-         String nombreMayusculo = nombre.toUpperCase();
-         String nombreSeleccionMayusculo = nombreSeleccion.toUpperCase();
-         Jugador jugador=jugadorRepository.findByNombreJugador(nombreMayusculo);
-         estaEnElSistema(jugador,nombre);
-        return jugadorRepository.save(new Jugador(nombreMayusculo,esEstrella,nombreSeleccionMayusculo));
+        // String nombreMayusculo = nombre.toUpperCase();
+         //String nombreSeleccionMayusculo = nombreSeleccion.toUpperCase();
+         Jugador jugador=jugadorRepository.findByNombreJugador(nombre.toUpperCase());
+         Seleccion seleccion=seleccionRepository.findByNombrePais(nombreSeleccion.toUpperCase());
+         estaEnElSistema(jugador,nombre.toUpperCase());
+        return jugadorRepository.save(new Jugador(nombre.toUpperCase(),esEstrella,seleccion));
     }
 
-    private void esaSeleccionEstaEnElSistema(Seleccion seleccion, String nombreSeleccionMayusculo) {
+   /* private void esaSeleccionEstaEnElSistema(Seleccion seleccion, String nombreSeleccionMayusculo) {
         if(seleccion==null)
             throw new NotFoundException("La Seleccion com nombre "+nombreSeleccionMayusculo+" no existe en el sistema");
-    }
+    }*/
 
     private void estaEnElSistema(Jugador jugador, String nombreJugador) {
         if(jugador!=null)
-            throw new NotFoundException("Jugador: "+nombreJugador+"ya Existe en el sistema");
+            throw new NotFoundException("Jugador: "+nombreJugador+" ya Existe en el sistema");
     }
 
     private void jugadorExiste(Jugador jugador,String nombreJugador) {

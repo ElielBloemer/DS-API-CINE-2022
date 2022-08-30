@@ -35,15 +35,15 @@ public class ActorController {
         this.actorService=actorService;
     }
 
-   /* @GetMapping
-    @Operation(summary = "Trae a todos los actores de la BD")
+    /*@GetMapping
+    @Operation(summary = "get all actor by a film")
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200",description = "ok todo los actores")
     })
     public ResponseEntity<List<ActorVO>> getJugadoresVO(){
         return null;// ResponseEntity.ok(converterActoresToVo(actorService.getTodoLosActores()));
-    }
-*/
+    }*/
+
     @GetMapping("/{nombreActor}")
     @Operation(summary= "trae un actor por su nombre")
     @ApiResponses(value = {
@@ -54,11 +54,11 @@ public class ActorController {
     }
 
     @PostMapping
-    @Operation(summary = "Crio actor na BD")
+    @Operation(summary = "create actor in DB")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "actor criado con exito")
+            @ApiResponse(responseCode = "201", description = "actor created sucessfull")
     })
-    public ResponseEntity<ActorVO>guardarActor(@RequestBody ActorVO actorVO) throws ValidationException{
+    public ResponseEntity<ActorVO>guardarActor(@RequestBody ActorVO actorVO) throws NotFoundException{
         return new ResponseEntity<>(convertorActorToVo(actorService.guardarActor(actorVO)), HttpStatus.CREATED);
     }
 

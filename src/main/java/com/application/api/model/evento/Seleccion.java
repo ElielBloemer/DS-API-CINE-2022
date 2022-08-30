@@ -1,8 +1,11 @@
 package com.application.api.model.evento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.JSONPropertyIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,7 +20,8 @@ public class Seleccion {
     private Integer id;
     private String nombrePais;
     private String continente;
-    @OneToMany
+    @OneToMany(mappedBy = "seleccion",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Jugador> jugadorTitulares;
     private Integer mundialesGanados;
 

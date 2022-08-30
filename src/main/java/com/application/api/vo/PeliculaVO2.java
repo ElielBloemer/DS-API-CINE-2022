@@ -12,20 +12,21 @@ public class PeliculaVO2 {
     public List<Actor> elenco;
     public String productora;
     public Integer duracionPelicula;
-    public Integer puntuacionEvento;
+   // public Integer puntuacionEvento;
 
-    public PeliculaVO2(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula,Integer puntuacionPelicula){
+    public PeliculaVO2(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula){
         this.nombrePelicula=nombrePelicula;
         this.elenco=elenco;
         this.productora=productora;
         this.duracionPelicula=duracionPelicula;
-        this.puntuacionEvento=puntuacionPelicula;
+        //this.puntuacionEvento=puntuacionPelicula;
     }
 
     public PeliculaVO2(Pelicula pelicula){
+        this.idPelicula=pelicula.getIdPelicula();
         this.nombrePelicula=pelicula.getNombrePelicula();
         this.duracionPelicula=pelicula.getDuracionPelicula();
-        this.puntuacionEvento=pelicula.getPuntuacionEvento();
+        //this.puntuacionEvento=pelicula.getPuntuacionEvento();
         this.elenco=pelicula.getElenco();
         this.productora=pelicula.getProductora();
     }

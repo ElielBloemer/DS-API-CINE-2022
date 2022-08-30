@@ -1,5 +1,6 @@
 package com.application.api.model.evento;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,14 +18,14 @@ public class Jugador {
     private Integer id;
     private String nombreJugador;
     private boolean esEstrella;
-    private String nombreSeleccion;
-    public Jugador(String nombre,boolean esEstrella,String nombreSeleccion){
+   // private String nombreSeleccion;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Seleccion seleccion;
+    public Jugador(String nombre,boolean esEstrella,Seleccion seleccion){
         this.nombreJugador=nombre;
         this.esEstrella=esEstrella;
-        this.nombreSeleccion=nombreSeleccion;
+        this.seleccion=seleccion;
     }
-
-    // @OneToOne
-    // private Seleccion selecion;
 
 }

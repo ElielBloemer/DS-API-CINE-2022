@@ -35,7 +35,7 @@ public class PeliculaController {
     }
 
     @PostMapping
-    @Operation(summary = "to creat a film")
+    @Operation(summary = "create a film")
     @ApiResponses({
             @ApiResponse(responseCode = "201",description = "criado")
     })
@@ -53,7 +53,7 @@ public class PeliculaController {
     })
     public ResponseEntity<Object>getPeliculaPorActorEstrella(@RequestParam String nameFilm){
         boolean contieneActorEstrella=iPeliculaService.contieneActorEstrella(nameFilm);
-        return ResponseEntity.ok(nameFilm.toUpperCase() + " contiene algun jugador estrella? " + contieneActorEstrella);
+        return ResponseEntity.ok(nameFilm.toUpperCase() + " contiene algun ACTOR estrella? " + contieneActorEstrella);
     }
 
     @GetMapping("/{nameFilm}")
@@ -66,5 +66,26 @@ public class PeliculaController {
         PeliculaVO2 response= new PeliculaVO2(pelicula);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("contieneProductoraFamosa/{nameFilm}")
+    @Operation(summary = "check out if the Productura is famous")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "ok")
+    })
+    public ResponseEntity<Object>getPeliculaSiProductoraIsFamous(@RequestParam String nameFilm){
+        boolean contieneProductoraFamous=iPeliculaService.productoraEsFamosa(nameFilm);
+        return ResponseEntity.ok(nameFilm.toUpperCase() + " esta producido por una Productora Famous? " + contieneProductoraFamous);
+    }
+
+    @GetMapping("isInteresting/{nameFilm}")
+    @Operation(summary = "check out if a films is interesting")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "ok")
+    })
+    public ResponseEntity<Object>getPeliculaIfIsIsteresting(@RequestParam String nameFilm){
+        boolean esInteresante=iPeliculaService.interestingCriteria(nameFilm);
+        return ResponseEntity.ok(" la Pelicula "+nameFilm.toUpperCase() + " e interesante? " + esInteresante);
+    }
+
 
 }
