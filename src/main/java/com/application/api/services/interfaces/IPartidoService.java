@@ -15,4 +15,6 @@ public interface IPartidoService {
 
     public boolean interestingCriteria(Integer idPartido);
 
+    public boolean estaInteresante(Integer idPartido);
+
 }

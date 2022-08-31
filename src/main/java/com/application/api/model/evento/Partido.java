@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Setter
 @Getter
-//@AllArgsConstructor
 @NoArgsConstructor
 public class Partido extends Evento{
 

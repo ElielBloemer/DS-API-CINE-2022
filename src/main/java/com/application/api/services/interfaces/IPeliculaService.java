@@ -14,13 +14,15 @@ public interface IPeliculaService {
 
     public Pelicula guardarPelicula(PeliculaVO peliculaVO);
 
-    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco,String productora,Integer duracionPelicula);
+    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio,String identificacionSala);
 
     public boolean contieneActorEstrella(String nombrePelicula);
 
     public boolean productoraEsFamosa(String nombrePelicula);
 
     public boolean interestingCriteria(String nombrePelicula);
+
+    public boolean estaInteresante(String nombrePelicula);
 
 
 }

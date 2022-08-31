@@ -26,7 +26,6 @@ public class SeleccionController {
 
     private final ISeleccionService seleccionService;
 
-    @Autowired
     public SeleccionController(ISeleccionService iSeleccionService){
         this.seleccionService = iSeleccionService;
     }

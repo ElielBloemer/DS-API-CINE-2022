@@ -2,13 +2,17 @@ package com.application.api.services;
 
 import com.application.api.model.evento.Actor;
 import com.application.api.model.evento.Pelicula;
+import com.application.api.model.evento.Sala;
 import com.application.api.model.evento.Seleccion;
 import com.application.api.persistance.ActorRepository;
 import com.application.api.persistance.PeliculaRepository;
+import com.application.api.persistance.SalaRepository;
 import com.application.api.services.interfaces.IPeliculaService;
 import com.application.api.services.interfaces.IProductoraFamosa;
+import com.application.api.services.validations.Validacion;
 import com.application.api.vo.PeliculaVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -19,11 +23,15 @@ import java.util.List;
 @Service
 public class PeliculaService implements IPeliculaService, IProductoraFamosa {
     private PeliculaRepository peliculaRepository;
+    private SalaRepository salaRepository;
+
+    private final Validacion validacion = new Validacion();
     //private ActorRepository actorRepository;
 
     @Autowired
-    public void setPeliculaService(PeliculaRepository peliculaRepository){
+    public void setPeliculaService(PeliculaRepository peliculaRepository,SalaRepository salaRepository){
         this.peliculaRepository=peliculaRepository;
+        this.salaRepository=salaRepository;
     }
     //@Autowired
     //public void setActorRepository(ActorRepository actorRepository){
@@ -48,14 +56,18 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
 
     @Override
     public Pelicula guardarPelicula(PeliculaVO peliculaVO) {
-        return guardarPelicula(peliculaVO.nombrePelicula,null,peliculaVO.productora, peliculaVO.duracionPeliculaMinutosPelicula);
+        return guardarPelicula(peliculaVO.nombrePelicula,null,peliculaVO.productora, peliculaVO.duracionPeliculaMinutosPelicula,peliculaVO.calificacionEvento,peliculaVO.precioEvento,peliculaVO.identificacionSala);
     }
 
     @Override
-    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula) {
+    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento,String identificacionSala) {
         Pelicula nuevaPelicula=peliculaRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
         estaEnElSistema(nuevaPelicula,nombrePelicula);
-        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula));
+        Sala sala=salaRepository.findByIdentificacionSala(identificacionSala);
+        validacion.getValidacion(sala,"","Ops :(, the Sala isnt in the system, PLEASE to create the room first.");
+        validacion.estaSalaOcupada(sala);
+        sala.setTieneEventoAsignado(true);
+        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,sala));
     }
 
     @Override
@@ -87,6 +99,12 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
         Pelicula pelicula=peliculaRepository.findByNombrePelicula(nombrePelicula);
         peliculaExiste(pelicula,nombrePelicula);
         return productoraEsFamosa((pelicula.getNombrePelicula())) || (tieneMuchosMinutos(pelicula) && contieneActorEstrella(pelicula.getNombrePelicula()));
+    }
+
+    @Override
+    public boolean estaInteresante(String nombrePelicula) {
+        Pelicula pelicula=getPeliculaByName(nombrePelicula);
+        return pelicula.getCalificacion()>=8 && interestingCriteria(nombrePelicula);
     }
 
     public boolean tieneMuchosMinutos(Pelicula pelicula){

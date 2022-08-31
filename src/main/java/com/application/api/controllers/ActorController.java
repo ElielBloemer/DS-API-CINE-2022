@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 public class ActorController {
     private final IActorService actorService;
 
-    @Autowired
     public ActorController(IActorService actorService){
         this.actorService=actorService;
     }

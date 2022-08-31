@@ -29,7 +29,6 @@ public class PeliculaController {
 
     private final IPeliculaService iPeliculaService;
 
-    @Autowired
     public PeliculaController(IPeliculaService ipeliculaService){
         this.iPeliculaService=ipeliculaService;
     }
@@ -39,7 +38,13 @@ public class PeliculaController {
     @ApiResponses({
             @ApiResponse(responseCode = "201",description = "criado")
     })
-    public ResponseEntity<PeliculaVO> guardarUnaPelicula(@RequestBody PeliculaVO peliculaVO){
+    public ResponseEntity<PeliculaVO> guardarUnaPelicula(@RequestParam String nombrePelicula,
+                                                         String nombreProductora,
+                                                         Integer duracionPeliculaEnMinutos,
+                                                         Integer CalificacionEvento,
+                                                         Float precioEvento,
+                                                         String identificacionSala){
+        PeliculaVO peliculaVO= new PeliculaVO(nombrePelicula,nombreProductora, duracionPeliculaEnMinutos, CalificacionEvento,precioEvento,identificacionSala);
         iPeliculaService.validarInformacion(peliculaVO.nombrePelicula.toUpperCase());
         Pelicula pelicula = iPeliculaService.guardarPelicula(peliculaVO);
         PeliculaVO response = new PeliculaVO(pelicula);
@@ -83,7 +88,7 @@ public class PeliculaController {
             @ApiResponse(responseCode = "200", description = "ok")
     })
     public ResponseEntity<Object>getPeliculaIfIsIsteresting(@RequestParam String nameFilm){
-        boolean esInteresante=iPeliculaService.interestingCriteria(nameFilm);
+        boolean esInteresante=iPeliculaService.estaInteresante(nameFilm.toUpperCase());
         return ResponseEntity.ok(" la Pelicula "+nameFilm.toUpperCase() + " e interesante? " + esInteresante);
     }
 

@@ -37,7 +37,7 @@ public class SalaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "sala created sucessfull")
     })
-    public ResponseEntity<SalaVO> guardarActor(@RequestBody SalaVO salaVO) throws NotFoundException {
+    public ResponseEntity<SalaVO> guardarSala(@RequestBody SalaVO salaVO) throws NotFoundException {
         return new ResponseEntity<>(convertorSalaToVo(iSalaService.saveSala(salaVO)), HttpStatus.CREATED);
     }
 
