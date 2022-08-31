@@ -14,6 +14,7 @@ public class Actor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
     private String nombreActor;
     @ManyToOne(fetch = FetchType.LAZY)

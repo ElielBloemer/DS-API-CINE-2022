@@ -15,6 +15,7 @@ public class Jugador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
     private String nombreJugador;
     private boolean esEstrella;

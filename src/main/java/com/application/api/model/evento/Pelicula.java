@@ -17,6 +17,7 @@ public class Pelicula {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer idPelicula;
     private String nombrePelicula;
     @OneToMany(mappedBy = "pelicula")

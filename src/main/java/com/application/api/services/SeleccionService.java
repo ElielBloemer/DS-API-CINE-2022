@@ -17,12 +17,12 @@ public class SeleccionService implements ISeleccionService {
 
     private SeleccionRepository seleccionRepository;
 
-    private JugadorRepository jugadorRepository;
+    /*private JugadorRepository jugadorRepository;
 
     @Autowired
     public void setJugadorService(JugadorRepository jugadorRepository){
         this.jugadorRepository=jugadorRepository;
-    }
+    }*/
 
     @Autowired
     public void setSeleccionService(SeleccionRepository seleccionRepository){
@@ -49,11 +49,11 @@ public class SeleccionService implements ISeleccionService {
 
     @Override
     public Seleccion guardarSeleccion(String nombrePais, String continente,List<Jugador> jugadores, Integer mundialesGanados) {
-        String nombreMayusculo= nombrePais.toUpperCase();
-        Seleccion nuevaSeleccion = seleccionRepository.findByNombrePais(nombreMayusculo);
+        //String nombreMayusculo= nombrePais.toUpperCase();
+        Seleccion nuevaSeleccion = seleccionRepository.findByNombrePais(nombrePais.toUpperCase());
         estaEnElSistema(nuevaSeleccion,nombrePais);
-        String continenteMayusculo=continente.toUpperCase();
-        return seleccionRepository.save(new Seleccion(nombreMayusculo,continenteMayusculo,jugadores,mundialesGanados));
+       // String continenteMayusculo=continente.toUpperCase();
+        return seleccionRepository.save(new Seleccion(nombrePais.toUpperCase(),continente.toUpperCase(),jugadores,mundialesGanados));
     }
 
     @Override
@@ -83,13 +83,13 @@ public class SeleccionService implements ISeleccionService {
 
     public void seleccionExiste(Seleccion seleccion,String nombreSelecion){
         if(seleccion==null){
-            throw new NotFoundException("La Seleccion com nombre "+ nombreSelecion + " NO existe en el sistema");
+            throw new NotFoundException("La Seleccion com nombre "+ nombreSelecion.toUpperCase() + " NO existe en el sistema");
         }
     }
 
     public void estaEnElSistema(Seleccion seleccion,String nombre) {
         if (seleccion != null) {
-            throw new NotFoundException("la seleccion " + nombre + " ya esta en el sistema!");
+            throw new NotFoundException("la seleccion " + nombre.toUpperCase() + " ya esta en el sistema!");
         }
     }
 }

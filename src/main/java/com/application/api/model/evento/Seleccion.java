@@ -17,6 +17,7 @@ public class Seleccion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
     private String nombrePais;
     private String continente;

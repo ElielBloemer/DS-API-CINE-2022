@@ -87,7 +87,6 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
         Pelicula pelicula=peliculaRepository.findByNombrePelicula(nombrePelicula);
         peliculaExiste(pelicula,nombrePelicula);
         return productoraEsFamosa((pelicula.getNombrePelicula())) || (tieneMuchosMinutos(pelicula) && contieneActorEstrella(pelicula.getNombrePelicula()));
-        //return false;
     }
 
     public boolean tieneMuchosMinutos(Pelicula pelicula){

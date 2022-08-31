@@ -10,8 +10,4 @@ public interface JugadorRepository extends JpaRepository<Jugador,Long> {
     public Jugador getJugadorById(Integer id);
     public Jugador findByNombreJugador(String nombreJugador);
 
-    //public List<Jugador> findBySeleccion
-
-    //MappedBy averiguar
-   // public List<Jugador> findBy
 }
