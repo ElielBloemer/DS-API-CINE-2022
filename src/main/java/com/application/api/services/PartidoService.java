@@ -2,10 +2,13 @@ package com.application.api.services;
 
 import com.application.api.model.evento.Jugador;
 import com.application.api.model.evento.Partido;
+import com.application.api.model.evento.Sala;
 import com.application.api.model.evento.Seleccion;
 import com.application.api.persistance.PartidoRepository;
+import com.application.api.persistance.SalaRepository;
 import com.application.api.persistance.SeleccionRepository;
 import com.application.api.services.interfaces.IPartidoService;
+import com.application.api.services.interfaces.ISalaService;
 import com.application.api.services.interfaces.ISeleccionService;
 import com.application.api.services.validations.Validacion;
 import com.application.api.vo.PartidoVO;
@@ -19,13 +22,20 @@ public class PartidoService implements IPartidoService {
 
     private PartidoRepository partidoRepository;
     private SeleccionRepository seleccionRepository;
+    private SalaRepository salaRepository;
     private ISeleccionService iSeleccionService;
+
     private final Validacion validacion = new Validacion();
+
 
     @Autowired
     public void setSeleccionRepository(SeleccionRepository seleccionRepository, ISeleccionService iSeleccionService){
         this.seleccionRepository=seleccionRepository;
         this.iSeleccionService = iSeleccionService;
+    }
+    @Autowired
+    public void setSalaRepository(SalaRepository salaRepository){
+        this.salaRepository=salaRepository;
     }
 
     @Autowired
@@ -42,16 +52,18 @@ public class PartidoService implements IPartidoService {
 
     @Override
     public Partido setPartidoWithSelecciones(PartidoVO partidoVO) {
-        return setPartidoWithSelecciones(partidoVO.seleccionA,partidoVO.seleccionB);
+        return setPartidoWithSelecciones(partidoVO.seleccionA,partidoVO.seleccionB,partidoVO.calificacionEvento,partidoVO.precioEvento,partidoVO.identificacionSala);
     }
 
     @Override
-    public Partido setPartidoWithSelecciones(String nombreSeleccionA, String nombreSeleccionB) {
+    public Partido setPartidoWithSelecciones(String nombreSeleccionA, String nombreSeleccionB, Integer calificacion, Float precio, String identificacionSala) {
         Seleccion seleccionA = seleccionRepository.findByNombrePais(nombreSeleccionA.toUpperCase());
-        Seleccion seleccionB = seleccionRepository.findByNombrePais(nombreSeleccionB.toUpperCase());
         validacion.getValidacion(seleccionA,nombreSeleccionA.toUpperCase()," NO se encuentra en nuestro sistema de selecciones");
+        Seleccion seleccionB = seleccionRepository.findByNombrePais(nombreSeleccionB.toUpperCase());
         validacion.getValidacion(seleccionB,nombreSeleccionB.toUpperCase()," NO se encuentra en nuestro sistema de selecciones");
-        return partidoRepository.save(new Partido(seleccionA,seleccionB));
+        Sala sala=salaRepository.findByIdentificacionSala(identificacionSala);
+        //validacion.getValidacion(seleccionB,nombreSeleccionB.toUpperCase()," NO se encuentra en nuestro sistema de sala");
+        return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio,sala));
     }
 
     @Override
