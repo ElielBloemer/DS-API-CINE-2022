@@ -2,6 +2,7 @@ package com.application.api.model.evento;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,21 +11,25 @@ import javax.persistence.*;
 @Data
 @Getter
 @Setter
-public class Actor {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Evento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nombreActor;
+
+    private Integer calificacion;
+
+    private Float precio;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-    private Pelicula pelicula;
-    //private String nombrePelicula;
-    private boolean esEstrella;
-    public Actor(String nombreActor,boolean esEstrella,Pelicula pelicula) {
-        this.nombreActor = nombreActor;
-        this.pelicula = pelicula;
-        this.esEstrella=esEstrella;
+    private Sala salaAsignada;
+
+    public Evento(Integer calificacion,Float precio,Sala sala){
+        this.calificacion=calificacion;
+        this.precio=precio;
+        this.salaAsignada=sala;
     }
 
 }

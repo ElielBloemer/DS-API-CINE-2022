@@ -1,6 +1,7 @@
 package com.application.api.controllers;
 
 import com.application.api.model.evento.Partido;
+import com.application.api.model.evento.Sala;
 import com.application.api.model.evento.Seleccion;
 import com.application.api.services.interfaces.IPartidoService;
 import com.application.api.services.interfaces.ISeleccionService;
@@ -51,8 +52,8 @@ public class PartidoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "actor created sucessfull")
     })
-    public ResponseEntity<PartidoVO>guardarActor(@RequestParam String nameTeamA,String nameTeamB) throws NotFoundException {
-        return new ResponseEntity<>(convertorMatchToVo(iPartidoService.setPartidoWithSelecciones(nameTeamA,nameTeamB)), HttpStatus.CREATED);
+    public ResponseEntity<PartidoVO>guardarActor(@RequestParam String nameTeamA, String nameTeamB, Integer calificacionEvento, Float precioEvento, String identifacionSala) throws NotFoundException {
+        return new ResponseEntity<>(convertorMatchToVo(iPartidoService.setPartidoWithSelecciones(nameTeamA,nameTeamB,calificacionEvento,precioEvento,identifacionSala)), HttpStatus.CREATED);
     }
 
     private PartidoVO convertorMatchToVo(Partido partido){

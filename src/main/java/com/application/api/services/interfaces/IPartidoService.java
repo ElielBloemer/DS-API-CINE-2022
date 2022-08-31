@@ -1,13 +1,15 @@
 package com.application.api.services.interfaces;
 
 import com.application.api.model.evento.Partido;
+import com.application.api.model.evento.Sala;
 import com.application.api.vo.PartidoVO;
+import org.springframework.data.relational.core.sql.In;
 
 public interface IPartidoService {
 
     public Partido getPartidoById(Integer idPartido);
 
-    public Partido setPartidoWithSelecciones(String seleccionA,String SeleccionB);
+    public Partido setPartidoWithSelecciones(String seleccionA, String SeleccionB, Integer calificacion, Float precio, String identificacionSala);
 
     public Partido setPartidoWithSelecciones(PartidoVO partidoVO);
 

@@ -5,9 +5,15 @@ import org.webjars.NotFoundException;
 
 public class Validacion{
 
-    public void getValidacion(Object object, String nombreSeleccion,String mensajeAMostrarPorConsola) {
+    public void getValidacion(Object object, String nombreobject,String mensajeAMostrarPorConsola) {
         if(object==null){
-            throw new NullPointerException(nombreSeleccion + mensajeAMostrarPorConsola);
+            throw new NullPointerException(nombreobject + mensajeAMostrarPorConsola);
+        }
+    }
+
+    public void getValidacionSiEstaEnElSistema(Object object, String nombreobject,String mensajeAMostrarPorConsola) {
+        if(object!=null){
+            throw new NullPointerException(nombreobject + mensajeAMostrarPorConsola);
         }
     }
 }
