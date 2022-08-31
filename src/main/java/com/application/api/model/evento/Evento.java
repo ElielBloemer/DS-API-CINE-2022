@@ -15,13 +15,10 @@ import javax.persistence.*;
 public abstract class Evento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
     private Integer calificacion;
-
     private Float precio;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Sala salaAsignada;

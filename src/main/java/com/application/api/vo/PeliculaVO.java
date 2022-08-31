@@ -2,6 +2,7 @@ package com.application.api.vo;
 
 import com.application.api.model.evento.Actor;
 import com.application.api.model.evento.Pelicula;
+import org.springframework.data.relational.core.sql.In;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,22 +17,29 @@ public class PeliculaVO {
    // public List<Actor> elenco;
     public String productora;
     public Integer duracionPeliculaMinutosPelicula;
+    public Integer calificacionEvento;
+    public Float precioEvento;
+    public String identificacionSala;
     //public Integer puntuacionEvento;
 
-    public PeliculaVO(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula){
+    public PeliculaVO(String nombrePelicula, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento,String identiticacionSala){
         this.nombrePelicula=nombrePelicula;
         //this.elenco=elenco;
         this.productora=productora;
         this.duracionPeliculaMinutosPelicula=duracionPelicula;
+        this.calificacionEvento=calificacionEvento;
+        this.precioEvento=precioEvento;
+        this.identificacionSala=identiticacionSala;
         //this.puntuacionEvento=puntuacionPelicula;
     }
 
     public PeliculaVO(Pelicula pelicula){
-        this.idPelicula=pelicula.getIdPelicula();
+        this.idPelicula=pelicula.getId();
         this.nombrePelicula=pelicula.getNombrePelicula();
         this.duracionPeliculaMinutosPelicula=pelicula.getDuracionPelicula();
-        //this.puntuacionEvento=pelicula.getPuntuacionEvento();
-        //this.elenco=pelicula.getElenco();
         this.productora=pelicula.getProductora();
+        this.calificacionEvento=pelicula.getCalificacion();
+        this.precioEvento=pelicula.getPrecio();
+        this.identificacionSala=pelicula.getSalaAsignada().getIdentificacionSala();
     }
 }

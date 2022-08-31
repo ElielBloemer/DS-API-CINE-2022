@@ -6,7 +6,7 @@ public class SalaVO {
 
     public Integer id;
 
-    public String identifacionSala;
+    public String identificacionSala;
 
     public Integer asientosDisponibles;
 
@@ -17,7 +17,7 @@ public class SalaVO {
 
     public SalaVO(Sala sala) {
         this.id=sala.getId();
-        this.identifacionSala = sala.getIdentificacionSala();
+        this.identificacionSala = sala.getIdentificacionSala();
         this.asientosDisponibles = sala.getAsientosDisponibles();
         this.asientoReservados = sala.getAsientoReservados();
     }

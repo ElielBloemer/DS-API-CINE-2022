@@ -27,13 +27,14 @@ public class PartidoService implements IPartidoService {
 
     private final Validacion validacion = new Validacion();
 
-
     @Autowired
-    public void setSeleccionRepository(SeleccionRepository seleccionRepository, ISeleccionService iSeleccionService){
+    public void setSeleccionRepository(SeleccionRepository seleccionRepository, ISeleccionService iSeleccionService,PartidoRepository partidoRepository,SalaRepository salaRepository){
         this.seleccionRepository=seleccionRepository;
         this.iSeleccionService = iSeleccionService;
+        this.salaRepository=salaRepository;
+        this.partidoRepository=partidoRepository;
     }
-    @Autowired
+    /*@Autowired
     public void setSalaRepository(SalaRepository salaRepository){
         this.salaRepository=salaRepository;
     }
@@ -41,7 +42,7 @@ public class PartidoService implements IPartidoService {
     @Autowired
     public void setPartidoRepository(PartidoRepository partidoRepository){
         this.partidoRepository=partidoRepository;
-    }
+    }*/
     
     @Override
     public Partido getPartidoById(Integer idPartido) {
@@ -62,7 +63,9 @@ public class PartidoService implements IPartidoService {
         Seleccion seleccionB = seleccionRepository.findByNombrePais(nombreSeleccionB.toUpperCase());
         validacion.getValidacion(seleccionB,nombreSeleccionB.toUpperCase()," NO se encuentra en nuestro sistema de selecciones");
         Sala sala=salaRepository.findByIdentificacionSala(identificacionSala);
-        //validacion.getValidacion(seleccionB,nombreSeleccionB.toUpperCase()," NO se encuentra en nuestro sistema de sala");
+        validacion.getValidacion(sala," "," NO se encuentra en nuestro sistema de SALAS");
+        validacion.estaSalaOcupada(sala);
+        sala.setTieneEventoAsignado(true);
         return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio,sala));
     }
 
@@ -74,7 +77,17 @@ public class PartidoService implements IPartidoService {
         Seleccion seleccionB=partido.getSeleccionB();
         boolean esInteresanteA=iSeleccionService.esMuyCampeona(seleccionA.getNombrePais()) || iSeleccionService.contieneJugadorEstrella(seleccionA.getNombrePais());
         boolean esInteresanteB=iSeleccionService.esMuyCampeona(seleccionB.getNombrePais()) || iSeleccionService.contieneJugadorEstrella(seleccionB.getNombrePais());
-        return esInteresanteA || esInteresanteB;
+        return (esInteresanteA || esInteresanteB) ;
     }
 
+    @Override
+    public boolean estaInteresante(Integer idPartido) {
+        Partido partido=getPartidoById(idPartido);
+        return partido.getCalificacion()>=8 && interestingCriteria(idPartido);
+    }
+
+   /*public void estaSalaOcupada(Sala sala){
+        if(sala.isTieneEventoAsignado())
+            throw new RuntimeException("SALA YA CONTIENE UN EVENTO ASIGNADO! PLEASE ASIGNE A OTRO SALA VACIA.");
+   }*/
 }

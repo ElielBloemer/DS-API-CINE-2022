@@ -22,14 +22,14 @@ public class SalaService implements ISalaService {
 
     @Override
     public Sala saveSala(SalaVO salaVO) {
-        return saveSala(salaVO.identifacionSala, salaVO.asientosDisponibles,salaVO.asientoReservados);
+        return saveSala(salaVO.identificacionSala, salaVO.asientosDisponibles,salaVO.asientoReservados);
     }
 
     @Override
     public Sala saveSala(String identificacionSala,Integer asientosDisponibles,Integer asientosOcupados) {
         Sala sala=salaRepository.findByIdentificacionSala(identificacionSala.toUpperCase());
         validacion.getValidacionSiEstaEnElSistema(sala,identificacionSala.toUpperCase()," esa SALA YA existe en nuestro sistema, porfavor Verifique el ID de sala");
-        return salaRepository.save(new Sala(identificacionSala.toUpperCase(), asientosDisponibles,asientosOcupados));
+        return salaRepository.save(new Sala(identificacionSala.toUpperCase(), asientosDisponibles,asientosOcupados,false));
     }
 
     @Override

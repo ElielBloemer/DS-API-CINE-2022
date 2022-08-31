@@ -31,7 +31,6 @@ public class JugadorController {
 
     private final IJugadorService jugadorService;
 
-    @Autowired
     public JugadorController(IJugadorService jugadorService){
         this.jugadorService=jugadorService;
     }

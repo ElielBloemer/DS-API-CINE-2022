@@ -11,14 +11,13 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Pelicula {
+public class Pelicula extends Evento{
 
-    @Id
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
-    private Integer idPelicula;
+    private Integer idPelicula;*/
     private String nombrePelicula;
     @OneToMany(mappedBy = "pelicula")
     @JsonIgnore
@@ -28,7 +27,8 @@ public class Pelicula {
     private Integer duracionPelicula;
     //private Integer puntuacionEvento;
 
-    public Pelicula(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula){
+    public Pelicula(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio,Sala sala){
+        super(calificacion,precio,sala);
         this.nombrePelicula=nombrePelicula;
         this.elenco=elenco;
         this.productora=productora;

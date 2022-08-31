@@ -14,16 +14,16 @@ public class PeliculaVO2 {
     public Integer duracionPelicula;
    // public Integer puntuacionEvento;
 
-    public PeliculaVO2(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula){
+    /*public PeliculaVO2(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula){
         this.nombrePelicula=nombrePelicula;
         this.elenco=elenco;
         this.productora=productora;
         this.duracionPelicula=duracionPelicula;
         //this.puntuacionEvento=puntuacionPelicula;
-    }
+    }*/
 
     public PeliculaVO2(Pelicula pelicula){
-        this.idPelicula=pelicula.getIdPelicula();
+        this.idPelicula=pelicula.getId();
         this.nombrePelicula=pelicula.getNombrePelicula();
         this.duracionPelicula=pelicula.getDuracionPelicula();
         //this.puntuacionEvento=pelicula.getPuntuacionEvento();

@@ -30,7 +30,7 @@ public class PartidoController {
     private final IPartidoService iPartidoService;
     private final ISeleccionService iSeleccionService;
 
-    @Autowired
+
     public PartidoController(IPartidoService iPartidoService, ISeleccionService iSeleccionService) {
         this.iPartidoService = iPartidoService;
         this.iSeleccionService = iSeleccionService;
@@ -50,10 +50,10 @@ public class PartidoController {
     @PostMapping
     @Operation(summary = "create a football match in the system")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "actor created sucessfull")
+            @ApiResponse(responseCode = "201", description = "football match created sucessfull")
     })
     public ResponseEntity<PartidoVO>guardarActor(@RequestParam String nameTeamA, String nameTeamB, Integer calificacionEvento, Float precioEvento, String identifacionSala) throws NotFoundException {
-        return new ResponseEntity<>(convertorMatchToVo(iPartidoService.setPartidoWithSelecciones(nameTeamA,nameTeamB,calificacionEvento,precioEvento,identifacionSala)), HttpStatus.CREATED);
+        return new ResponseEntity<>(convertorMatchToVo(iPartidoService.setPartidoWithSelecciones(nameTeamA.toUpperCase(),nameTeamB.toUpperCase(),calificacionEvento,precioEvento,identifacionSala)), HttpStatus.CREATED);
     }
 
     private PartidoVO convertorMatchToVo(Partido partido){
@@ -67,7 +67,7 @@ public class PartidoController {
     })
     public ResponseEntity<Object>getMatchIfIsIsteresting(@RequestParam Integer idPartido){
         Partido partido=iPartidoService.getPartidoById(idPartido);
-        boolean esInteresante=iPartidoService.interestingCriteria(idPartido);
+        boolean esInteresante=iPartidoService.estaInteresante(idPartido);
         return ResponseEntity.ok(" The Football Match between "+ partido.getSeleccionA().getNombrePais().toUpperCase() + " X " +
                 partido.getSeleccionB().getNombrePais().toUpperCase() + " is interesting? " + (esInteresante));
     }

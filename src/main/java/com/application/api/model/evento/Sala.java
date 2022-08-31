@@ -27,9 +27,12 @@ public class Sala {
 
     private Integer asientoReservados;
 
-    public Sala(String identifacionSala, Integer asientosDisponibles, Integer asientoReservados) {
+    private boolean tieneEventoAsignado;
+
+    public Sala(String identifacionSala, Integer asientosDisponibles, Integer asientoReservados,boolean tieneEventoAsignado) {
         this.identificacionSala = identifacionSala;
         this.asientosDisponibles = asientosDisponibles;
         this.asientoReservados = asientoReservados;
+        this.tieneEventoAsignado=tieneEventoAsignado;
     }
 }
