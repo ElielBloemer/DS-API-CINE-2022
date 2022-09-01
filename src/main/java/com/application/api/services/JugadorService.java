@@ -1,6 +1,5 @@
 package com.application.api.services;
 
-import com.application.api.model.evento.Actor;
 import com.application.api.model.evento.Jugador;
 import com.application.api.model.evento.Seleccion;
 import com.application.api.persistance.JugadorRepository;
@@ -37,7 +36,7 @@ public class JugadorService implements IJugadorService {
     @Override
     public Jugador getJugadorByNombre(String nombreJugador) {
         Jugador jugador=jugadorRepository.findByNombreJugador(nombreJugador);
-        jugadorExiste(jugador,nombreJugador);
+        objectoExiste(jugador,nombreJugador);
         return jugador;
     }
 
@@ -52,6 +51,7 @@ public class JugadorService implements IJugadorService {
          //String nombreSeleccionMayusculo = nombreSeleccion.toUpperCase();
          Jugador jugador=jugadorRepository.findByNombreJugador(nombre.toUpperCase());
          Seleccion seleccion=seleccionRepository.findByNombrePais(nombreSeleccion.toUpperCase());
+         objectoExiste(seleccion,nombreSeleccion);
          estaEnElSistema(jugador,nombre.toUpperCase());
         return jugadorRepository.save(new Jugador(nombre.toUpperCase(),esEstrella,seleccion));
     }
@@ -61,13 +61,13 @@ public class JugadorService implements IJugadorService {
             throw new NotFoundException("La Seleccion com nombre "+nombreSeleccionMayusculo+" no existe en el sistema");
     }*/
 
-    private void estaEnElSistema(Jugador jugador, String nombreJugador) {
-        if(jugador!=null)
-            throw new NotFoundException("Jugador: "+nombreJugador+" ya Existe en el sistema");
+    private void estaEnElSistema(Object object, String nombreDato) {
+        if(object!=null)
+            throw new NotFoundException(nombreDato+ " YA Existe en nuestro sistema".toUpperCase());
     }
 
-    private void jugadorExiste(Jugador jugador,String nombreJugador) {
-        if(jugador==null)
-            throw new NotFoundException("Jugador: "+nombreJugador+" no existe en el sistema");
+    private void objectoExiste(Object object, String nombreDato) {
+        if(object==null)
+            throw new NotFoundException(nombreDato.toUpperCase()+ " NO existe en nuestro sistema,Porfavor REGISTRELO PRIMERO");
     }
 }

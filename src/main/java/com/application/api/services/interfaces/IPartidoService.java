@@ -9,7 +9,7 @@ public interface IPartidoService {
 
     public Partido getPartidoById(Integer idPartido);
 
-    public Partido setPartidoWithSelecciones(String seleccionA, String SeleccionB, Integer calificacion, Float precio, String identificacionSala);
+    public Partido setPartidoWithSelecciones(String seleccionA, String SeleccionB, Integer calificacion, Float precio);
 
     public Partido setPartidoWithSelecciones(PartidoVO partidoVO);
 

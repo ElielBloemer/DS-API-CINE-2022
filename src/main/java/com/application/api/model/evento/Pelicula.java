@@ -27,8 +27,9 @@ public class Pelicula extends Evento{
     private Integer duracionPelicula;
     //private Integer puntuacionEvento;
 
-    public Pelicula(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio,Sala sala){
-        super(calificacion,precio,sala);
+    public Pelicula(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio){
+        //super(calificacion,precio,sala);
+        super(calificacion,precio);
         this.nombrePelicula=nombrePelicula;
         this.elenco=elenco;
         this.productora=productora;

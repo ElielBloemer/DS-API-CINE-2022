@@ -42,9 +42,8 @@ public class PeliculaController {
                                                          String nombreProductora,
                                                          Integer duracionPeliculaEnMinutos,
                                                          Integer CalificacionEvento,
-                                                         Float precioEvento,
-                                                         String identificacionSala){
-        PeliculaVO peliculaVO= new PeliculaVO(nombrePelicula,nombreProductora, duracionPeliculaEnMinutos, CalificacionEvento,precioEvento,identificacionSala);
+                                                         Float precioEvento){
+        PeliculaVO peliculaVO= new PeliculaVO(nombrePelicula,nombreProductora, duracionPeliculaEnMinutos, CalificacionEvento,precioEvento);
         iPeliculaService.validarInformacion(peliculaVO.nombrePelicula.toUpperCase());
         Pelicula pelicula = iPeliculaService.guardarPelicula(peliculaVO);
         PeliculaVO response = new PeliculaVO(pelicula);

@@ -12,7 +12,7 @@ public class PartidoVO {
 
     public Integer calificacionEvento;
     public Float precioEvento;
-    public String identificacionSala;
+   // public String identificacionSala;
 
     public PartidoVO() {
     }
@@ -23,7 +23,7 @@ public class PartidoVO {
         this.seleccionB=partido.getSeleccionB().getNombrePais();
         this.calificacionEvento=partido.getCalificacion();
         this.precioEvento=partido.getPrecio();
-        this.identificacionSala=partido.getSalaAsignada().getIdentificacionSala();
+        //this.identificacionSala=partido.getSalaAsignada().getIdentificacionSala();
     }
 
    /* public PartidoVO(String nombreSeleccionA,String nombreSeleccionB){

@@ -8,13 +8,16 @@ import java.util.List;
 
 public interface IPeliculaService {
 
+    public Pelicula getAllPeliculas();
+
     public Pelicula getPeliculaByName(String nombrePelicula);
+    public Pelicula getPeliculaById(Integer idPelicula);
 
     public void validarInformacion(String nombrePelicula);
 
     public Pelicula guardarPelicula(PeliculaVO peliculaVO);
 
-    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio,String identificacionSala);
+    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio);
 
     public boolean contieneActorEstrella(String nombrePelicula);
 

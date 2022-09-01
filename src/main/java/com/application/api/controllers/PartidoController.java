@@ -5,6 +5,7 @@ import com.application.api.model.evento.Sala;
 import com.application.api.model.evento.Seleccion;
 import com.application.api.services.interfaces.IPartidoService;
 import com.application.api.services.interfaces.ISeleccionService;
+import com.application.api.services.validations.Validacion;
 import com.application.api.vo.PartidoVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,6 +31,7 @@ public class PartidoController {
     private final IPartidoService iPartidoService;
     private final ISeleccionService iSeleccionService;
 
+    private final Validacion validacion = new Validacion();
 
     public PartidoController(IPartidoService iPartidoService, ISeleccionService iSeleccionService) {
         this.iPartidoService = iPartidoService;
@@ -43,6 +45,7 @@ public class PartidoController {
     })
     public ResponseEntity<Object> getPartidoByid(@RequestParam Integer idPartido){
         Partido partidoById=iPartidoService.getPartidoById(idPartido);
+        validacion.getValidacion(partidoById,""," THE MATCH IS NOT IN THE SYSTEM");
         PartidoVO response = new PartidoVO(partidoById);
         return ResponseEntity.ok(response);
     }
@@ -52,8 +55,8 @@ public class PartidoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "football match created sucessfull")
     })
-    public ResponseEntity<PartidoVO>guardarActor(@RequestParam String nameTeamA, String nameTeamB, Integer calificacionEvento, Float precioEvento, String identifacionSala) throws NotFoundException {
-        return new ResponseEntity<>(convertorMatchToVo(iPartidoService.setPartidoWithSelecciones(nameTeamA.toUpperCase(),nameTeamB.toUpperCase(),calificacionEvento,precioEvento,identifacionSala)), HttpStatus.CREATED);
+    public ResponseEntity<PartidoVO>guardarActor(@RequestParam String nameTeamA, String nameTeamB, Integer calificacionEvento, Float precioEvento) throws NotFoundException {
+        return new ResponseEntity<>(convertorMatchToVo(iPartidoService.setPartidoWithSelecciones(nameTeamA.toUpperCase(),nameTeamB.toUpperCase(),calificacionEvento,precioEvento)), HttpStatus.CREATED);
     }
 
     private PartidoVO convertorMatchToVo(Partido partido){
@@ -67,6 +70,7 @@ public class PartidoController {
     })
     public ResponseEntity<Object>getMatchIfIsIsteresting(@RequestParam Integer idPartido){
         Partido partido=iPartidoService.getPartidoById(idPartido);
+        validacion.getValidacion(partido,""," THE MATCH IS NOT IN THE SYSTEM");
         boolean esInteresante=iPartidoService.estaInteresante(idPartido);
         return ResponseEntity.ok(" The Football Match between "+ partido.getSeleccionA().getNombrePais().toUpperCase() + " X " +
                 partido.getSeleccionB().getNombrePais().toUpperCase() + " is interesting? " + (esInteresante));
