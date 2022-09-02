@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class PeliculaVO {
@@ -19,18 +21,17 @@ public class PeliculaVO {
     public Integer duracionPeliculaMinutosPelicula;
     public Integer calificacionEvento;
     public Float precioEvento;
+    public LocalDateTime fechaEvento;
     /*public String identificacionSala;
     //public Integer puntuacionEvento;*/
 
-    public PeliculaVO(String nombrePelicula, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento){
+    public PeliculaVO(String nombrePelicula, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento,LocalDateTime fechaEvento){
         this.nombrePelicula=nombrePelicula;
-        //this.elenco=elenco;
         this.productora=productora;
         this.duracionPeliculaMinutosPelicula=duracionPelicula;
         this.calificacionEvento=calificacionEvento;
         this.precioEvento=precioEvento;
-        //this.identificacionSala=identiticacionSala;
-        //this.puntuacionEvento=puntuacionPelicula;
+        this.fechaEvento=fechaEvento;
     }
 
     public PeliculaVO(Pelicula pelicula){
@@ -40,6 +41,6 @@ public class PeliculaVO {
         this.productora=pelicula.getProductora();
         this.calificacionEvento=pelicula.getCalificacion();
         this.precioEvento=pelicula.getPrecio();
-        //this.identificacionSala=pelicula.getSalaAsignada().getIdentificacionSala();
+        this.fechaEvento=pelicula.getFechaEvento();
     }
 }

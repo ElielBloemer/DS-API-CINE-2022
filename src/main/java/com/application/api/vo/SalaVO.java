@@ -36,8 +36,9 @@ public class SalaVO {
         this.idEvento = idEvento;
     }*/
 
-    public SalaVO(String identifacionSala) {
+    public SalaVO(String identifacionSala,Integer asientosEnSala) {
         this.identificacionSala = identifacionSala;
+        this.asientosDisponibles=asientosEnSala;
     }
 
     public SalaVO(Integer Id,String identifacionSala, Integer asientosDisponibles, Integer asientoReservados,String nombreEvento) {

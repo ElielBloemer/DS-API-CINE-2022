@@ -36,7 +36,7 @@ public class SalaService implements ISalaService {
 
     @Override
     public Sala saveSala(SalaVO salaVO) {
-        return saveSala(salaVO.identificacionSala, 100,0,0);
+        return saveSala(salaVO.identificacionSala, salaVO.asientosDisponibles,0,0);
     }
 
     @Override

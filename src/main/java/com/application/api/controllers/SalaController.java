@@ -48,8 +48,8 @@ public class SalaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "sala created sucessfull")
     })
-    public ResponseEntity<SalaVO2> guardarSala(@RequestParam String idSala) throws NotFoundException {
-        SalaVO salaVO=new SalaVO(idSala);
+    public ResponseEntity<SalaVO2> guardarSala(@RequestParam String idSala,Integer asientoEnSala) throws NotFoundException {
+        SalaVO salaVO=new SalaVO(idSala,asientoEnSala);
         return new ResponseEntity<>(convertorSalaToVo2(iSalaService.saveSala(salaVO)), HttpStatus.CREATED);
     }
 

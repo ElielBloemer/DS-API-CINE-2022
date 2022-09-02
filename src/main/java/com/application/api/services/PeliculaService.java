@@ -16,10 +16,8 @@ import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,11 +76,11 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
 
     @Override
     public Pelicula guardarPelicula(PeliculaVO peliculaVO) {
-        return guardarPelicula(peliculaVO.nombrePelicula,null,peliculaVO.productora, peliculaVO.duracionPeliculaMinutosPelicula,peliculaVO.calificacionEvento,peliculaVO.precioEvento);
+        return guardarPelicula(peliculaVO.nombrePelicula,null,peliculaVO.productora, peliculaVO.duracionPeliculaMinutosPelicula,peliculaVO.calificacionEvento,peliculaVO.precioEvento,peliculaVO.fechaEvento);
     }
 
     @Override
-    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento) {
+    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula, Integer calificacionEvento, Float precioEvento, LocalDateTime fechaEvento) {
         Pelicula nuevaPelicula=peliculaRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
         estaEnElSistema(nuevaPelicula,nombrePelicula);
        // Sala sala=salaRepository.findByIdentificacionSala(identificacionSala);
@@ -90,7 +88,7 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
        // validacion.estaSalaOcupada(sala);
       //  sala.setTieneEventoAsignado(true);
        // return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,sala));
-        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento));
+        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,fechaEvento));
     }
 
     @Override

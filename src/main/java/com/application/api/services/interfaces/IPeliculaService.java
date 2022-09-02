@@ -4,6 +4,8 @@ import com.application.api.model.evento.Actor;
 import com.application.api.model.evento.Pelicula;
 import com.application.api.vo.PeliculaVO;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface IPeliculaService {
@@ -17,7 +19,7 @@ public interface IPeliculaService {
 
     public Pelicula guardarPelicula(PeliculaVO peliculaVO);
 
-    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio);
+    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula, Integer calificacion, Float precio, LocalDateTime fechaEvento);
 
     public boolean contieneActorEstrella(String nombrePelicula);
 

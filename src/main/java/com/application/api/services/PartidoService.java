@@ -15,6 +15,8 @@ import com.application.api.vo.PartidoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -53,11 +55,11 @@ public class PartidoService implements IPartidoService {
 
     @Override
     public Partido setPartidoWithSelecciones(PartidoVO partidoVO) {
-        return setPartidoWithSelecciones(partidoVO.seleccionA,partidoVO.seleccionB,partidoVO.calificacionEvento,partidoVO.precioEvento);
+        return setPartidoWithSelecciones(partidoVO.nombreSeleccionA,partidoVO.nombreSeleccionB,partidoVO.calificacionEvento,partidoVO.precioEvento,partidoVO.fechaEvento);
     }
 
     @Override
-    public Partido setPartidoWithSelecciones(String nombreSeleccionA, String nombreSeleccionB, Integer calificacion, Float precio) {
+    public Partido setPartidoWithSelecciones(String nombreSeleccionA, String nombreSeleccionB, Integer calificacion, Float precio, LocalDateTime fechaEvento) {
         Seleccion seleccionA = seleccionRepository.findByNombrePais(nombreSeleccionA.toUpperCase());
         validacion.getValidacion(seleccionA,nombreSeleccionA.toUpperCase()," NO se encuentra en nuestro sistema de selecciones");
         Seleccion seleccionB = seleccionRepository.findByNombrePais(nombreSeleccionB.toUpperCase());
@@ -67,7 +69,7 @@ public class PartidoService implements IPartidoService {
         validacion.estaSalaOcupada(sala);
         sala.setTieneEventoAsignado(true);*/
         //return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio,sala));
-        return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio));
+        return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio,fechaEvento));
     }
 
     @Override

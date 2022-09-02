@@ -12,10 +12,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.webjars.NotFoundException;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/V1.0/disenioDeSistemas/match")
@@ -55,9 +59,17 @@ public class PartidoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "football match created sucessfull")
     })
-    public ResponseEntity<PartidoVO>guardarActor(@RequestParam String nameTeamA, String nameTeamB, Integer calificacionEvento, Float precioEvento) throws NotFoundException {
-        return new ResponseEntity<>(convertorMatchToVo(iPartidoService.setPartidoWithSelecciones(nameTeamA.toUpperCase(),nameTeamB.toUpperCase(),calificacionEvento,precioEvento)), HttpStatus.CREATED);
+    public ResponseEntity<PartidoVO>guardarPartido(@RequestParam String nameTeamA,
+                                                 String nameTeamB,
+                                                 Integer calificacionEvento,
+                                                 Float precioEvento,
+                                                 @RequestParam
+                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaEvento) {
+        PartidoVO partidoVO = new PartidoVO(nameTeamA,nameTeamB,calificacionEvento,precioEvento,fechaEvento);
+        Partido response= iPartidoService.setPartidoWithSelecciones(partidoVO);
+        return new ResponseEntity<>(convertorMatchToVo(response), HttpStatus.CREATED);
     }
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 
     private PartidoVO convertorMatchToVo(Partido partido){
         return new PartidoVO(partido);

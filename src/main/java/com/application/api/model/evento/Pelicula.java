@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,9 +29,9 @@ public class Pelicula extends Evento{
     private Integer duracionPelicula;
     //private Integer puntuacionEvento;
 
-    public Pelicula(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula,Integer calificacion,Float precio){
+    public Pelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula, Integer calificacion, Float precio, LocalDateTime fechaEvento){
         //super(calificacion,precio,sala);
-        super(calificacion,precio);
+        super(calificacion,precio,fechaEvento);
         this.nombrePelicula=nombrePelicula;
         this.elenco=elenco;
         this.productora=productora;
