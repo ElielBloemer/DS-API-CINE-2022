@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Setter
@@ -29,10 +26,14 @@ public class Sala {
 
     private boolean tieneEventoAsignado;
 
-    public Sala(String identifacionSala, Integer asientosDisponibles, Integer asientoReservados,boolean tieneEventoAsignado) {
+    @OneToOne(fetch = FetchType.LAZY)
+    private Evento evento;
+
+    public Sala(String identifacionSala, Integer asientosDisponibles, Integer asientoReservados,boolean tieneEventoAsignado,Evento evento) {
         this.identificacionSala = identifacionSala;
         this.asientosDisponibles = asientosDisponibles;
         this.asientoReservados = asientoReservados;
         this.tieneEventoAsignado=tieneEventoAsignado;
+        this.evento=evento;
     }
 }

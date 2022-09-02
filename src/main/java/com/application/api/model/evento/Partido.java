@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.springframework.data.relational.core.sql.In;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Setter
@@ -25,8 +27,9 @@ public class Partido extends Evento{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Seleccion seleccionB;
-    public Partido(Seleccion seleccionA, Seleccion seleccionB,Integer calificacion,Float precio,Sala sala){
-        super(calificacion,precio,sala);
+    public Partido(Seleccion seleccionA, Seleccion seleccionB, Integer calificacion, Float precio, LocalDateTime fechaEvento){
+        //super(calificacion,precio,sala);
+        super(calificacion,precio,fechaEvento);
         this.seleccionA=seleccionA;
         this.seleccionB=seleccionB;
     }

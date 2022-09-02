@@ -12,9 +12,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/V1.0/disenioDeSistemas/films")
@@ -43,13 +47,15 @@ public class PeliculaController {
                                                          Integer duracionPeliculaEnMinutos,
                                                          Integer CalificacionEvento,
                                                          Float precioEvento,
-                                                         String identificacionSala){
-        PeliculaVO peliculaVO= new PeliculaVO(nombrePelicula,nombreProductora, duracionPeliculaEnMinutos, CalificacionEvento,precioEvento,identificacionSala);
+                                                         @RequestParam
+                                                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaEvento){
+        PeliculaVO peliculaVO= new PeliculaVO(nombrePelicula,nombreProductora, duracionPeliculaEnMinutos, CalificacionEvento,precioEvento,fechaEvento);
         iPeliculaService.validarInformacion(peliculaVO.nombrePelicula.toUpperCase());
         Pelicula pelicula = iPeliculaService.guardarPelicula(peliculaVO);
         PeliculaVO response = new PeliculaVO(pelicula);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 
     @GetMapping("contieneActorEstrella/{nameFilm}")
     @Operation(summary = "check out if any actor is a star")

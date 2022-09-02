@@ -16,14 +16,16 @@ import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PeliculaService implements IPeliculaService, IProductoraFamosa {
     private PeliculaRepository peliculaRepository;
-    private SalaRepository salaRepository;
+    //private SalaRepository salaRepository;
+
+    private List<Pelicula> peliculas;
 
     private final Validacion validacion = new Validacion();
     //private ActorRepository actorRepository;
@@ -31,43 +33,62 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
     @Autowired
     public void setPeliculaService(PeliculaRepository peliculaRepository,SalaRepository salaRepository){
         this.peliculaRepository=peliculaRepository;
-        this.salaRepository=salaRepository;
+        //this.salaRepository=salaRepository;
+        //peliculas=peliculaRepository.findAll();
     }
     //@Autowired
     //public void setActorRepository(ActorRepository actorRepository){
        // this.actorRepository=actorRepository;
     //}
-    
+
+    @Override
+    public Pelicula getAllPeliculas() {
+        //peliculas=peliculaRepository.findAll();
+        return null;
+    }
+
     @Override
     public Pelicula getPeliculaByName(String nombrePelicula) {
+       //List<Pelicula> peliculasDB=new ArrayList<>();
+        //peliculasDB=peliculas;
         Pelicula pelicula=peliculaRepository.findByNombrePelicula(nombrePelicula);
         peliculaExiste(pelicula,nombrePelicula.toUpperCase());
         //List<Actor> actores=actorRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
         //pelicula.setElenco(existeActoresEnEsPelicula(actores));
+        //Pelicula pelicula=peliculasDB.stream().filter(pelicula1 -> pelicula1.getNombrePelicula().equals(nombrePelicula.toUpperCase()));
+        return pelicula;
+    }
+
+    @Override
+    public Pelicula getPeliculaById(Integer idPelicula) {
+        Pelicula pelicula=peliculaRepository.findById(idPelicula);
+        // LA VALIDACION ES MEJOR HACER DONDE LLAMO
+        //peliculaExiste(pelicula,idPelicula.toString());
         return pelicula;
     }
 
     @Override
     public void validarInformacion(String nombrePelicula) {
         if(nombrePelicula.equals("STRING")){
-            throw new NotFoundException("Nombre INVALIDO para la pelicula");
+            throw new NotFoundException(" Nombre INVALIDO para la pelicula");
         }
     }
 
     @Override
     public Pelicula guardarPelicula(PeliculaVO peliculaVO) {
-        return guardarPelicula(peliculaVO.nombrePelicula,null,peliculaVO.productora, peliculaVO.duracionPeliculaMinutosPelicula,peliculaVO.calificacionEvento,peliculaVO.precioEvento,peliculaVO.identificacionSala);
+        return guardarPelicula(peliculaVO.nombrePelicula,null,peliculaVO.productora, peliculaVO.duracionPeliculaMinutosPelicula,peliculaVO.calificacionEvento,peliculaVO.precioEvento,peliculaVO.fechaEvento);
     }
 
     @Override
-    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento,String identificacionSala) {
+    public Pelicula guardarPelicula(String nombrePelicula, List<Actor> elenco, String productora, Integer duracionPelicula, Integer calificacionEvento, Float precioEvento, LocalDateTime fechaEvento) {
         Pelicula nuevaPelicula=peliculaRepository.findByNombrePelicula(nombrePelicula.toUpperCase());
         estaEnElSistema(nuevaPelicula,nombrePelicula);
-        Sala sala=salaRepository.findByIdentificacionSala(identificacionSala);
-        validacion.getValidacion(sala,"","Ops :(, the Sala isnt in the system, PLEASE to create the room first.");
-        validacion.estaSalaOcupada(sala);
-        sala.setTieneEventoAsignado(true);
-        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,sala));
+       // Sala sala=salaRepository.findByIdentificacionSala(identificacionSala);
+       // validacion.getValidacion(sala,"","Ops :(, the Sala isnt in the system, PLEASE to create the room first.");
+       // validacion.estaSalaOcupada(sala);
+      //  sala.setTieneEventoAsignado(true);
+       // return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,sala));
+        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,fechaEvento));
     }
 
     @Override
@@ -117,7 +138,7 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
 
     public void peliculaExiste(Pelicula pelicula,String nombrePelicula){
         if(pelicula==null){
-            throw new NotFoundException("La Pelicula com nombre "+ nombrePelicula.toUpperCase() + " NO existe en el sistema");
+            throw new NotFoundException("La Pelicula com NOMBRE o ID "+ nombrePelicula.toUpperCase() + " NO existe en el sistema");
         }
     }
 
