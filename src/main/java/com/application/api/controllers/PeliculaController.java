@@ -49,7 +49,7 @@ public class PeliculaController {
                                                          Float precioEvento,
                                                          @RequestParam
                                                          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaEvento){
-        PeliculaVO peliculaVO= new PeliculaVO(nombrePelicula,nombreProductora, duracionPeliculaEnMinutos, CalificacionEvento,precioEvento,fechaEvento);
+        PeliculaVO peliculaVO= new PeliculaVO(nombrePelicula,nombreProductora, duracionPeliculaEnMinutos, CalificacionEvento,precioEvento,fechaEvento,null);
         iPeliculaService.validarInformacion(peliculaVO.nombrePelicula.toUpperCase());
         Pelicula pelicula = iPeliculaService.guardarPelicula(peliculaVO);
         PeliculaVO response = new PeliculaVO(pelicula);

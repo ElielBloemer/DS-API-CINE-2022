@@ -20,4 +20,6 @@ public interface IPartidoService {
 
     public boolean estaInteresante(Integer idPartido);
 
+    public void updateMatchwithSala(Partido partido,String idPartido);
+
 }

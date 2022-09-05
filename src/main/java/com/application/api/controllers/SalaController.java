@@ -5,10 +5,7 @@ import com.application.api.services.interfaces.IPartidoService;
 import com.application.api.services.interfaces.IPeliculaService;
 import com.application.api.services.interfaces.ISalaService;
 import com.application.api.services.validations.Validacion;
-import com.application.api.vo.ActorVO;
-import com.application.api.vo.PartidoVO;
-import com.application.api.vo.SalaVO;
-import com.application.api.vo.SalaVO2;
+import com.application.api.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -115,6 +112,7 @@ public class SalaController {
         Sala response=iSalaService.getSalaByIdentificacion(identificacionSala.toUpperCase());
         response.setEvento(null);
         response.setTieneEventoAsignado(false);
+        //iPeliculaService.updateCleaningSala(response.getEvento().);
         Sala newResponse=iSalaService.saveRoomCleaningReturns(response);
         return ResponseEntity.ok(convertorSalaToVo2(newResponse));
        // return null;
@@ -124,6 +122,8 @@ public class SalaController {
     @Operation(summary = "schuled a Sala for a pelicula")
     public ResponseEntity<SalaVO>getSalaForSchuduleForFilm(@RequestParam String nombrePelicula,String identificacionSala){
         Sala response=iSalaService.saveSalaWithFilm(identificacionSala,nombrePelicula.toUpperCase());
+        Pelicula pelicula=iPeliculaService.getPeliculaByName(nombrePelicula);
+        iPeliculaService.uptadePeliculaWithSala(pelicula,identificacionSala);
         return new ResponseEntity<>(new SalaVO(response.getId(),response.getIdentificacionSala(),response.getAsientosDisponibles(),response.getAsientoReservados(),nombrePelicula),HttpStatus.OK);
     }
 
@@ -132,6 +132,7 @@ public class SalaController {
     public ResponseEntity<SalaVO>getSalaForSchuduleForMatch(@RequestParam Integer idPartido, String identificacionSala){
         Sala response=iSalaService.saveSalaWithMatch(identificacionSala,idPartido);
         Partido partido=iPartidoService.getPartidoById(idPartido);
+        iPartidoService.updateMatchwithSala(partido,identificacionSala);
         validacion.getValidacion(partido,""," THE MATCH IS NOT IN THE SYSTEM");
         String nombrePartido=partido.getSeleccionA().getNombrePais()+" X "+partido.getSeleccionB().getNombrePais();
         return new ResponseEntity<>(new SalaVO(response.getId(),response.getIdentificacionSala(),response.getAsientosDisponibles(),response.getAsientoReservados(),nombrePartido.toUpperCase()),HttpStatus.OK);
@@ -147,7 +148,7 @@ public class SalaController {
         Sala sala=iSalaService.getSalaByIdentificacion(idSala);
         return ResponseEntity.ok("is there available seats in the Sala : "+ idSala + " ? " + thereIsAvailableSeats +
                 ". Available seats: "+sala.getAsientosDisponibles()+
-                ". Occupied seats : "+sala.getAsientoReservados() );
+                ". Occupied seats : "+sala.getAsientoReservados());
     }
 
 }

@@ -1,4 +1,4 @@
-package com.application.api.services;
+package com.application.api.services.evento;
 
 import com.application.api.model.evento.Jugador;
 import com.application.api.model.evento.Seleccion;
@@ -30,6 +30,20 @@ public class SeleccionService implements ISeleccionService {
     }
 
     @Override
+    public Seleccion guardarSeleccion(SeleccionVO selecioVO) {
+        return guardarSeleccion(selecioVO.nombrePais,selecioVO.continente,null,selecioVO.mundialesGanados);
+    }
+
+    @Override
+    public Seleccion guardarSeleccion(String nombrePais, String continente,List<Jugador> jugadores, Integer mundialesGanados) {
+        //String nombreMayusculo= nombrePais.toUpperCase();
+        Seleccion nuevaSeleccion = seleccionRepository.findByNombrePais(nombrePais.toUpperCase());
+        estaEnElSistema(nuevaSeleccion,nombrePais);
+        // String continenteMayusculo=continente.toUpperCase();
+        return seleccionRepository.save(new Seleccion(nombrePais.toUpperCase(),continente.toUpperCase(),jugadores,mundialesGanados));
+    }
+
+    @Override
     public Seleccion getSeleccionPorNombre(String nombre) {
         Seleccion seleccion = seleccionRepository.findByNombrePais(nombre.toUpperCase());
         seleccionExiste(seleccion,nombre.toUpperCase());
@@ -42,19 +56,6 @@ public class SeleccionService implements ISeleccionService {
         return jugadores;
     }
 
-    @Override
-    public Seleccion guardarSeleccion(SeleccionVO selecioVO) {
-        return guardarSeleccion(selecioVO.nombrePais,selecioVO.continente,null,selecioVO.mundialesGanados);
-    }
-
-    @Override
-    public Seleccion guardarSeleccion(String nombrePais, String continente,List<Jugador> jugadores, Integer mundialesGanados) {
-        //String nombreMayusculo= nombrePais.toUpperCase();
-        Seleccion nuevaSeleccion = seleccionRepository.findByNombrePais(nombrePais.toUpperCase());
-        estaEnElSistema(nuevaSeleccion,nombrePais);
-       // String continenteMayusculo=continente.toUpperCase();
-        return seleccionRepository.save(new Seleccion(nombrePais.toUpperCase(),continente.toUpperCase(),jugadores,mundialesGanados));
-    }
 
     @Override
     public boolean contieneJugadorEstrella(String nombreSelecion) {

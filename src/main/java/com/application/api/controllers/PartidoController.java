@@ -43,7 +43,7 @@ public class PartidoController {
     }
 
     @GetMapping("/{IdMatch}")
-    @Operation(summary = "Get every matches")
+    @Operation(summary = "Get a matches")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "ok")
     })
@@ -65,7 +65,7 @@ public class PartidoController {
                                                  Float precioEvento,
                                                  @RequestParam
                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaEvento) {
-        PartidoVO partidoVO = new PartidoVO(nameTeamA,nameTeamB,calificacionEvento,precioEvento,fechaEvento);
+        PartidoVO partidoVO = new PartidoVO(nameTeamA,nameTeamB,calificacionEvento,precioEvento,fechaEvento,null);
         Partido response= iPartidoService.setPartidoWithSelecciones(partidoVO);
         return new ResponseEntity<>(convertorMatchToVo(response), HttpStatus.CREATED);
     }

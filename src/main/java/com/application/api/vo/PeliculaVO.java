@@ -22,16 +22,17 @@ public class PeliculaVO {
     public Integer calificacionEvento;
     public Float precioEvento;
     public LocalDateTime fechaEvento;
-    /*public String identificacionSala;
+    public String identificacionSala;
     //public Integer puntuacionEvento;*/
 
-    public PeliculaVO(String nombrePelicula, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento,LocalDateTime fechaEvento){
+    public PeliculaVO(String nombrePelicula, String productora, Integer duracionPelicula, Integer calificacionEvento,Float precioEvento,LocalDateTime fechaEvento,String idSala){
         this.nombrePelicula=nombrePelicula;
         this.productora=productora;
         this.duracionPeliculaMinutosPelicula=duracionPelicula;
         this.calificacionEvento=calificacionEvento;
         this.precioEvento=precioEvento;
         this.fechaEvento=fechaEvento;
+        this.identificacionSala=idSala;
     }
 
     public PeliculaVO(Pelicula pelicula){
@@ -42,5 +43,6 @@ public class PeliculaVO {
         this.calificacionEvento=pelicula.getCalificacion();
         this.precioEvento=pelicula.getPrecio();
         this.fechaEvento=pelicula.getFechaEvento();
+        this.identificacionSala=pelicula.getIdSala();
     }
 }

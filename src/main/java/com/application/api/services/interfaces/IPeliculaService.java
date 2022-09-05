@@ -28,6 +28,9 @@ public interface IPeliculaService {
     public boolean interestingCriteria(String nombrePelicula);
 
     public boolean estaInteresante(String nombrePelicula);
+    public void uptadePeliculaWithSala(Pelicula pelicula,String idSala);
+
+    public void updateCleaningSala(String nombrePelicula);
 
 
 }
