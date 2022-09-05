@@ -1,4 +1,4 @@
-package com.application.api.services;
+package com.application.api.services.evento;
 
 import com.application.api.model.evento.Jugador;
 import com.application.api.model.evento.Seleccion;

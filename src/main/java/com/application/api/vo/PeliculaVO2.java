@@ -12,7 +12,7 @@ public class PeliculaVO2 {
     public List<Actor> elenco;
     public String productora;
     public Integer duracionPelicula;
-   // public Integer puntuacionEvento;
+    public String idSala;
 
     /*public PeliculaVO2(String nombrePelicula,List<Actor> elenco,String productora,Integer duracionPelicula){
         this.nombrePelicula=nombrePelicula;
@@ -29,5 +29,6 @@ public class PeliculaVO2 {
         //this.puntuacionEvento=pelicula.getPuntuacionEvento();
         this.elenco=pelicula.getElenco();
         this.productora=pelicula.getProductora();
+        this.idSala=pelicula.getIdSala();
     }
 }

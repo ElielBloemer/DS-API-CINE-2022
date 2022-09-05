@@ -23,15 +23,19 @@ public abstract class Evento {
     private Float precio;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ",shape = JsonFormat.Shape.STRING)
     private LocalDateTime fechaEvento;
-   // @OneToOne(fetch = FetchType.LAZY)
-   // @JsonIgnore
-   // private Sala salaAsignada;
+    /*@OneToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Sala salaAsignada;*/
+    private String idSala;
 
-    public Evento(Integer calificacion,Float precio,LocalDateTime fechaEvento){
+    private boolean eventoActivo;
+
+    public Evento(Integer calificacion,Float precio,LocalDateTime fechaEvento,String idSala,boolean eventoActivo){
         this.calificacion=calificacion;
         this.precio=precio;
         this.fechaEvento=fechaEvento;
-        //this.salaAsignada=sala;
+        this.idSala=idSala;
+        this.eventoActivo=eventoActivo;
     }
 
 }

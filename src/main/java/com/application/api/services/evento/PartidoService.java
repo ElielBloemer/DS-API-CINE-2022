@@ -1,4 +1,4 @@
-package com.application.api.services;
+package com.application.api.services.evento;
 
 import com.application.api.model.evento.Jugador;
 import com.application.api.model.evento.Partido;
@@ -48,9 +48,9 @@ public class PartidoService implements IPartidoService {
     
     @Override
     public Partido getPartidoById(Integer idPartido) {
-        Partido partido=partidoRepository.findPartidoById(idPartido);
+       // Partido partido=partidoRepository.findPartidoById(idPartido);
         // LA VALIDACION ES MEJOR HACER DONDE LLAMO
-        return partido;
+        return partidoRepository.findPartidoById(idPartido);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class PartidoService implements IPartidoService {
         validacion.estaSalaOcupada(sala);
         sala.setTieneEventoAsignado(true);*/
         //return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio,sala));
-        return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio,fechaEvento));
+        return partidoRepository.save(new Partido(seleccionA,seleccionB,calificacion,precio,fechaEvento,null,true));
     }
 
     @Override
@@ -88,6 +88,12 @@ public class PartidoService implements IPartidoService {
         Partido partido=getPartidoById(idPartido);
         validacion.getValidacion(partido,""," THE MATCH IS NOT IN THE SYSTEM");
         return partido.getCalificacion()>=8 && interestingCriteria(idPartido);
+    }
+
+    @Override
+    public void updateMatchwithSala(Partido partido, String idSala) {
+        partido.setIdSala(idSala);
+        partidoRepository.save(partido);
     }
 
    /*public void estaSalaOcupada(Sala sala){

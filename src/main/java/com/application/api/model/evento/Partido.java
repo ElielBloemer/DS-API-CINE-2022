@@ -27,9 +27,9 @@ public class Partido extends Evento{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Seleccion seleccionB;
-    public Partido(Seleccion seleccionA, Seleccion seleccionB, Integer calificacion, Float precio, LocalDateTime fechaEvento){
+    public Partido(Seleccion seleccionA, Seleccion seleccionB, Integer calificacion, Float precio, LocalDateTime fechaEvento,String idSala,boolean estaActiva){
         //super(calificacion,precio,sala);
-        super(calificacion,precio,fechaEvento);
+        super(calificacion,precio,fechaEvento,idSala,estaActiva);
         this.seleccionA=seleccionA;
         this.seleccionB=seleccionB;
     }

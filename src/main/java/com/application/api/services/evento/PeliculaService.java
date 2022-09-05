@@ -1,4 +1,4 @@
-package com.application.api.services;
+package com.application.api.services.evento;
 
 import com.application.api.model.evento.Actor;
 import com.application.api.model.evento.Pelicula;
@@ -88,7 +88,7 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
        // validacion.estaSalaOcupada(sala);
       //  sala.setTieneEventoAsignado(true);
        // return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,sala));
-        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,fechaEvento));
+        return peliculaRepository.save(new Pelicula(nombrePelicula.toUpperCase(),elenco,productora.toUpperCase(),duracionPelicula,calificacionEvento,precioEvento,fechaEvento,null,true));
     }
 
     @Override
@@ -126,6 +126,17 @@ public class PeliculaService implements IPeliculaService, IProductoraFamosa {
     public boolean estaInteresante(String nombrePelicula) {
         Pelicula pelicula=getPeliculaByName(nombrePelicula);
         return pelicula.getCalificacion()>=8 && interestingCriteria(nombrePelicula);
+    }
+
+    @Override
+    public void uptadePeliculaWithSala(Pelicula pelicula,String idSala) {
+     pelicula.setIdSala(idSala);
+       peliculaRepository.save(pelicula);
+    }
+
+    @Override
+    public void updateCleaningSala(String nombrePelicula) {
+
     }
 
     public boolean tieneMuchosMinutos(Pelicula pelicula){

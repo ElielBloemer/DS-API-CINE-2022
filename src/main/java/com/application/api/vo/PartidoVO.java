@@ -16,6 +16,8 @@ public class PartidoVO {
     public Integer calificacionEvento;
     public Float precioEvento;
 
+    public String idSala;
+
     public LocalDateTime fechaEvento;
    // public String identificacionSala;
 
@@ -29,14 +31,16 @@ public class PartidoVO {
         this.calificacionEvento=partido.getCalificacion();
         this.precioEvento=partido.getPrecio();
         this.fechaEvento=partido.getFechaEvento();
+        this.idSala=partido.getIdSala();
         //this.identificacionSala=partido.getSalaAsignada().getIdentificacionSala();
     }
 
-    public PartidoVO(String nombreSeleccionA,String nombreSeleccionB,Integer calificacionEvento, Float precioEvento,LocalDateTime fechaEvento){
+    public PartidoVO(String nombreSeleccionA,String nombreSeleccionB,Integer calificacionEvento, Float precioEvento,LocalDateTime fechaEvento,String idSala){
         this.nombreSeleccionA=nombreSeleccionA;
         this.nombreSeleccionB=nombreSeleccionB;
         this.calificacionEvento=calificacionEvento;
         this.precioEvento=precioEvento;
         this.fechaEvento=fechaEvento;
+        this.idSala=idSala;
     }
 }
