@@ -12,14 +12,12 @@ public class PartidoVO {
     public Integer id;
     public String nombreSeleccionA;
     public String nombreSeleccionB;
-
     public Integer calificacionEvento;
     public Float precioEvento;
 
     public String idSala;
 
     public LocalDateTime fechaEvento;
-   // public String identificacionSala;
 
     public PartidoVO() {
     }

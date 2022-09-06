@@ -10,11 +10,11 @@ public class DescuentoBasicoService extends Descuento {
 
     @Override
     public boolean esValido(Usuario usuario, Evento evento) {
-        return false;
+        return true;
     }
 
     @Override
     public float calcularDescuento(Usuario usuario, Evento evento) {
-        return 0;
+        return (float) (evento.getPrecio()*0.25);
     }
 }
