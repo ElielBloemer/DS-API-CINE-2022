@@ -3,23 +3,25 @@ package com.application.api.vo;
 import com.application.api.model.evento.Partido;
 import com.application.api.model.evento.Sala;
 import com.application.api.model.evento.Seleccion;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.relational.core.sql.In;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 
+@Getter
+@Setter
 public class PartidoVO {
     public Integer id;
     public String nombreSeleccionA;
     public String nombreSeleccionB;
-
     public Integer calificacionEvento;
     public Float precioEvento;
 
     public String idSala;
 
     public LocalDateTime fechaEvento;
-   // public String identificacionSala;
 
     public PartidoVO() {
     }

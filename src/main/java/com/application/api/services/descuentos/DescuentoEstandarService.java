@@ -15,6 +15,6 @@ public class DescuentoEstandarService extends Descuento {
 
     @Override
     public float calcularDescuento(Usuario usuario, Evento evento) {
-        return 0;
+        return (float) (evento.getPrecio()*0.50);
     }
 }

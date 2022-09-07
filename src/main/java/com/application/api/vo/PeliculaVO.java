@@ -2,6 +2,8 @@ package com.application.api.vo;
 
 import com.application.api.model.evento.Actor;
 import com.application.api.model.evento.Pelicula;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.relational.core.sql.In;
 
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
 public class PeliculaVO {
 
     public Integer idPelicula;

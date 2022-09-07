@@ -40,17 +40,16 @@ public class SalaService implements ISalaService {
     }
 
     @Override
-    public Sala saveRoomCleaningReturns(Sala sala) {
-        return salaRepository.save(sala);
-    }
-
-    @Override
     public Sala saveSala(String identificacionSala, Integer asientosDisponibles, Integer asientosOcupados, Integer idEvento) {
         Sala sala=salaRepository.findByIdentificacionSala(identificacionSala.toUpperCase());
         validacion.getValidacionSiEstaEnElSistema(sala,identificacionSala.toUpperCase()," esa SALA YA existe en nuestro sistema, porfavor Verifique el ID de sala");
        // Pelicula pelicula=iPeliculaService.getPeliculaById(idEvento);
         //Partido partido=iPartidoService.getPartidoById(idEvento);
         return salaRepository.save(new Sala(identificacionSala.toUpperCase(), asientosDisponibles,asientosOcupados,false,null));
+    }
+    @Override
+    public Sala saveRoomCleaningReturns(Sala sala) {
+        return salaRepository.save(sala);
     }
 
     @Override

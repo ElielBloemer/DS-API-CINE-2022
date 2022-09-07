@@ -101,7 +101,6 @@ public class SalaController {
             return ResponseEntity.ok(new SalaVO(response.getId(),response.getIdentificacionSala(),response.getAsientosDisponibles(),
                     response.getAsientoReservados(),nombrePartido.toUpperCase()));
         }
-
         //return new ResponseEntity<>(new SalaVO(response.getIdentificacionSala(),response.getAsientosDisponibles(),response.getAsientoReservados()),HttpStatus.OK);
         return null;
     }
