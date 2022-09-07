@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 @Getter
 @Setter
 public class ReservaVO {
-
     public  String idReserva;
     public  Integer cantidadEntradas;
 
@@ -23,7 +22,6 @@ public class ReservaVO {
     //TODO - el tipo de DESCUENTO
     public  String tipoDeDescuento;
     public  boolean reservaActiva;
-
     public float costoTotal;
 
     public ReservaVO(String idReserva, Integer cantidadEntradas, Evento evento, Combo combo, Float descuentoOtorgado, String tipoDeDescuento, boolean reservaActiva,Integer costoTotal) {

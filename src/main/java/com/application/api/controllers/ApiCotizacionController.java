@@ -1,10 +1,16 @@
 package com.application.api.controllers;
 
 import com.application.api.model.apicotizacion.Cotizacion;
+
+import com.application.api.services.interfaces.ICotizacionService;
+import com.application.api.vo.CotizacionVO;
+import com.application.api.vo.CotizacionVOValorCompra;
+import com.application.api.vo.TarjetaDeDebitoVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,20 +28,29 @@ import org.springframework.web.client.RestTemplate;
 })
 public class ApiCotizacionController {
 
-    private Cotizacion cotizacion;
+    private final ICotizacionService cotizacionService;
+
+    public ApiCotizacionController(ICotizacionService cotizacionService) {
+        this.cotizacionService=cotizacionService;
+    }
 
     @GetMapping(value = "/cotizacion/dolarblue")
     @Operation(summary= "trae la cotizacion del dolar blue")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = " cotizacion entregue")
+            @ApiResponse(responseCode = "200", description = "cotizacion entregue")
     })
-    private String getCotizacionDolar(){
-        String uri="https://api-dolar-argentina.herokuapp.com/api/dolarblue/";
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri,String.class);
-        /*JSONObject obj = new JSONObject(result);
-        Cotizacion dolarBlue = new Cotizacion(obj.getString("fecha"),obj.getString("compra"),obj.getString("venta"));*/
-        return result;
+    private ResponseEntity<Object> getCotizacionDolar(){
+        return ResponseEntity.ok(cotizacionService.getCotizacion());
     }
 
+    @GetMapping(value = "/cotizacion/onlyPaydolarblue")
+    @Operation(summary= "trae la cotizacion de compra del dolar blue")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "cotizacion entregue")
+    })
+    private ResponseEntity<Object> getCotizacionCompraDolar(){
+        float valorCompra= cotizacionService.valorCompraDolar();
+        CotizacionVOValorCompra cotizacionVOValorCompra= new CotizacionVOValorCompra(valorCompra);
+        return ResponseEntity.ok(cotizacionVOValorCompra);
+    }
 }

@@ -76,6 +76,7 @@ public class ReservaController {
         //TODO aca debo pasar el usuario han!NO el null.
         iReservaService.obtenerDescuento(reservaVO,null,partido);
         reservaVO.setReservaActiva(true);
+        reservaVO.setCostoTotal(newPartido.getPrecioEvento()*cantidadEntradas - (reservaVO.getDescuentoOtorgado()*cantidadEntradas));
         Reserva response= iReservaService.saveReserva(reservaVO);
         ReservaVOPartidoVO newReserva=new ReservaVOPartidoVO (response,newPartido);
         //newReserva.setEvento(partido);
@@ -104,6 +105,7 @@ public class ReservaController {
         //TODO aca debo pasar el usuario han!NO el null.
         iReservaService.obtenerDescuento(reservaVO,null,pelicula);
         reservaVO.setReservaActiva(true);
+        reservaVO.setCostoTotal(newPelicula.getPrecioEvento()*cantidadEntradas - (reservaVO.getDescuentoOtorgado()*cantidadEntradas));
         Reserva response= iReservaService.saveReserva(reservaVO);
         ReservaVOwithPeliculaVO newReserva=new ReservaVOwithPeliculaVO (response,newPelicula);
         emailSender.sendEmailWithPelicula("",newReserva);

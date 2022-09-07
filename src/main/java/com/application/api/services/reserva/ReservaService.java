@@ -47,6 +47,7 @@ public class ReservaService implements IReservaService, IAccountService {
     public Reserva saveReserva(String idReserva, Integer cantEntradas, Evento evento, Float descuentoOtorgado, String tipoDeDescuento, boolean reservaActiva,float costoTotal) {
         Reserva reserva=getReservaById(idReserva.toUpperCase());
         validacion.getValidacionSiEstaEnElSistema(reserva,idReserva,"Reserva YA existente en el sistema.");
+
         return reservaRepository.save(new Reserva(generarIdReserva(),cantEntradas,evento,null,descuentoOtorgado,tipoDeDescuento,reservaActiva,costoTotal));
     }
 
@@ -115,7 +116,7 @@ public class ReservaService implements IReservaService, IAccountService {
         return idReserva;
     }
 
-    @Override
+    /*@Override
     public void sendEmailWithPelicula(String email, ReservaVOwithPeliculaVO reservaVOwithPeliculaVO) throws MessagingException {
         emailSender.sendEmailWithPelicula("",reservaVOwithPeliculaVO);
     }
@@ -123,5 +124,5 @@ public class ReservaService implements IReservaService, IAccountService {
     @Override
     public void sendEmailWithPartido(String email, ReservaVOPartidoVO reservaVOPartidoVO) throws MessagingException {
         emailSender.sendEmailWithPartido("",reservaVOPartidoVO);
-    }
+    }*/
 }

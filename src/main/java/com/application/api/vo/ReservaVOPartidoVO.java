@@ -4,9 +4,13 @@ import com.application.api.model.combo.Combo;
 import com.application.api.model.evento.Evento;
 import com.application.api.model.evento.Partido;
 import com.application.api.model.reserva.Reserva;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class ReservaVOPartidoVO {
 
     public  String idReserva;

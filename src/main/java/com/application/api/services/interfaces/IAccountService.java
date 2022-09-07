@@ -6,7 +6,7 @@ import com.application.api.vo.ReservaVOwithPeliculaVO;
 import javax.mail.MessagingException;
 
 public interface IAccountService {
-    public void sendEmailWithPelicula(String email, ReservaVOwithPeliculaVO reservaVOwithPeliculaVO) throws MessagingException;
+   /* public void sendEmailWithPelicula(String email, ReservaVOwithPeliculaVO reservaVOwithPeliculaVO) throws MessagingException;
 
-   public void sendEmailWithPartido(String email, ReservaVOPartidoVO reservaVOPartidoVO) throws MessagingException;
+   public void sendEmailWithPartido(String email, ReservaVOPartidoVO reservaVOPartidoVO) throws MessagingException;*/
 }
