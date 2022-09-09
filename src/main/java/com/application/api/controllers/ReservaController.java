@@ -3,10 +3,8 @@ package com.application.api.controllers;
 
 import com.application.api.model.evento.*;
 import com.application.api.model.reserva.Reserva;
-import com.application.api.services.interfaces.IPartidoService;
-import com.application.api.services.interfaces.IPeliculaService;
-import com.application.api.services.interfaces.IReservaService;
-import com.application.api.services.interfaces.ISalaService;
+import com.application.api.model.tarjetadedebito.TarjetaDeDebito;
+import com.application.api.services.interfaces.*;
 import com.application.api.services.reserva.EmailSender;
 import com.application.api.services.validations.Validacion;
 import com.application.api.vo.*;
@@ -42,6 +40,7 @@ public class ReservaController {
     private final Validacion validacion = new Validacion();
 
     private EmailSender emailSender;
+    private ITarjetaDeDebitoService iTarjetaDeDebitoService;
 
     @Autowired
     public void setEmailSender(EmailSender emailSender){
@@ -49,11 +48,12 @@ public class ReservaController {
     }
 
 
-    public ReservaController(IReservaService iReservaService,IPeliculaService iPeliculaService,IPartidoService iPartidoService,ISalaService iSalaService) {
+    public ReservaController(IReservaService iReservaService, IPeliculaService iPeliculaService, IPartidoService iPartidoService, ISalaService iSalaService, ITarjetaDeDebitoService iTarjetaDeDebitoService) {
         this.iReservaService=iReservaService;
         this.iPeliculaService=iPeliculaService;
         this.iPartidoService=iPartidoService;
         this.iSalaService=iSalaService;
+        this.iTarjetaDeDebitoService = iTarjetaDeDebitoService;
     }
 
     //TODO aca USUARIO esta hardcodeado,OJOOO!!!
@@ -62,7 +62,10 @@ public class ReservaController {
     @ApiResponses({
             @ApiResponse(responseCode = "201",description = "criado")
     })
-    public ResponseEntity<Object> guardarUnaReservaConPartido(@RequestParam Integer cantidadEntradas,Integer idPartido) throws MessagingException {
+    public ResponseEntity<Object> guardarUnaReservaConPartido(@RequestParam Integer cantidadEntradas,
+                                                              Integer idPartido,
+                                                              String numeroTarjeta,
+                                                              @RequestParam(required = false) String monedaElegida) throws MessagingException {
         Partido partido=iPartidoService.getPartidoById(idPartido);
         Sala sala=iSalaService.getSalaByIdentificacion(partido.getIdSala());
         for(int i=0;i<cantidadEntradas;i++){
@@ -74,14 +77,26 @@ public class ReservaController {
         reservaVO.setEvento(partido);
         reservaVO.setCantidadEntradas(cantidadEntradas);
         //TODO aca debo pasar el usuario han!NO el null.
-        iReservaService.obtenerDescuento(reservaVO,null,partido);
-        reservaVO.setReservaActiva(true);
+        iReservaService.obtenerDescuento(reservaVO,null,partido,cantidadEntradas);
         reservaVO.setCostoTotal(newPartido.getPrecioEvento()*cantidadEntradas - (reservaVO.getDescuentoOtorgado()*cantidadEntradas));
-        Reserva response= iReservaService.saveReserva(reservaVO);
-        ReservaVOPartidoVO newReserva=new ReservaVOPartidoVO (response,newPartido);
+        boolean responseTransacion=iTarjetaDeDebitoService.pagar(reservaVO.getCostoTotal(),monedaElegida,numeroTarjeta);
+        //reservaVO.setReservaActiva(true);
+        if(responseTransacion){
+            reservaVO.setReservaActiva(true);
+            Reserva response= iReservaService.saveReserva(reservaVO);
+            ReservaVOPartidoVO newReserva=new ReservaVOPartidoVO (response,newPartido);
+            emailSender.sendEmailWithPartido("",newReserva);
+            return new ResponseEntity<>(newReserva, HttpStatus.CREATED);
+
+        }else {
+            return ResponseEntity.ok(" RESERVA FAILED.");
+        }
+
+        //Reserva response= iReservaService.saveReserva(reservaVO);
+       // ReservaVOPartidoVO newReserva=new ReservaVOPartidoVO (response,newPartido);
         //newReserva.setEvento(partido);
-        emailSender.sendEmailWithPartido("",newReserva);
-        return new ResponseEntity<>(newReserva, HttpStatus.CREATED);
+        //emailSender.sendEmailWithPartido("",newReserva);
+       // return new ResponseEntity<>(newReserva, HttpStatus.CREATED);
     }
 
     //TODO aca USUARIO esta hardcodeado,OJOOO!!!
@@ -90,8 +105,10 @@ public class ReservaController {
     @ApiResponses({
             @ApiResponse(responseCode = "201",description = "criado")
     })
-    public ResponseEntity<Object> guardarUnaReservaConPelicula(@RequestParam Integer cantidadEntradas,String nombrePelicula) throws MessagingException {
-        //Partido partido=iPartidoService.getPartidoById(idPartido);
+    public ResponseEntity<Object> guardarUnaReservaConPelicula(@RequestParam Integer cantidadEntradas,
+                                                               String nombrePelicula,
+                                                               String numeroTarjeta,
+                                                               @RequestParam(required = false) String monedaElegida) throws MessagingException {
         Pelicula pelicula=iPeliculaService.getPeliculaByName(nombrePelicula);
         Sala sala=iSalaService.getSalaByIdentificacion(pelicula.getIdSala());
         for(int i=0;i<cantidadEntradas;i++){
@@ -103,13 +120,24 @@ public class ReservaController {
         reservaVO.setEvento(pelicula);
         reservaVO.setCantidadEntradas(cantidadEntradas);
         //TODO aca debo pasar el usuario han!NO el null.
-        iReservaService.obtenerDescuento(reservaVO,null,pelicula);
-        reservaVO.setReservaActiva(true);
+        iReservaService.obtenerDescuento(reservaVO,null,pelicula,cantidadEntradas);
         reservaVO.setCostoTotal(newPelicula.getPrecioEvento()*cantidadEntradas - (reservaVO.getDescuentoOtorgado()*cantidadEntradas));
+        boolean responseTransacion=iTarjetaDeDebitoService.pagar(reservaVO.getCostoTotal(),monedaElegida,numeroTarjeta);
+        if(responseTransacion){
+            reservaVO.setReservaActiva(true);
+            Reserva response= iReservaService.saveReserva(reservaVO);
+            ReservaVOwithPeliculaVO newReserva=new ReservaVOwithPeliculaVO (response,newPelicula);
+            emailSender.sendEmailWithPelicula("",newReserva);
+            return new ResponseEntity<>(newReserva, HttpStatus.CREATED);
+
+        }else {
+            return ResponseEntity.ok(" RESERVA FAILED.");
+        }
+        /*reservaVO.setReservaActiva(true);
         Reserva response= iReservaService.saveReserva(reservaVO);
         ReservaVOwithPeliculaVO newReserva=new ReservaVOwithPeliculaVO (response,newPelicula);
-        emailSender.sendEmailWithPelicula("",newReserva);
-        return new ResponseEntity<>(newReserva, HttpStatus.CREATED);
+        emailSender.sendEmailWithPelicula("",newReserva);*/
+        //return new ResponseEntity<>(newReserva, HttpStatus.CREATED);
     }
 
     @GetMapping("/{IdReserva}")

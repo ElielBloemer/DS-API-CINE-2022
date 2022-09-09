@@ -1,7 +1,5 @@
 package com.application.api.controllers;
 
-import com.application.api.model.apicotizacion.Cotizacion;
-
 import com.application.api.services.interfaces.ICotizacionService;
 import com.application.api.vo.CotizacionVO;
 import com.application.api.vo.CotizacionVOValorCompra;

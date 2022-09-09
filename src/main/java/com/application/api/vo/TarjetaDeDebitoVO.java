@@ -10,7 +10,7 @@ public class TarjetaDeDebitoVO {
     public String numeroTarjetaDeDebito;
     public String titular;
     public float dineroDisponibleMonedaLocal;
-    public String monedaNacional;
+   // public String monedaNacional;
     public float dineroDisponibleMonedaExtranjera;
     public String monedaExtranjera;
 
@@ -18,7 +18,7 @@ public class TarjetaDeDebitoVO {
         this.numeroTarjetaDeDebito = numeroTarjetaDeDebito;
         this.titular = titular;
         this.dineroDisponibleMonedaLocal = dineroDisponibleMonedaLocal;
-        this.monedaNacional = monedaNacional;
+       // this.monedaNacional = monedaNacional;
         this.dineroDisponibleMonedaExtranjera = dineroDisponibleMonedaExtranjera;
         this.monedaExtranjera = monedaExtranjera;
     }
@@ -28,7 +28,7 @@ public class TarjetaDeDebitoVO {
         this.numeroTarjetaDeDebito = tarjetaDeDebito.getNumeroTarjetaDeDebito();
         this.titular = tarjetaDeDebito.getTitular();
         this.dineroDisponibleMonedaLocal = tarjetaDeDebito.getDineroDisponibleMonedaLocal();
-        this.monedaNacional = tarjetaDeDebito.getMonedaNacional();
+        //this.monedaNacional = tarjetaDeDebito.getMonedaNacional();
         this.dineroDisponibleMonedaExtranjera = tarjetaDeDebito.getDineroDisponibleMonedaExtranjera();
         this.monedaExtranjera = tarjetaDeDebito.getMonedaExtranjera();
     }

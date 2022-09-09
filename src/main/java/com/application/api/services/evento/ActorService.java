@@ -37,12 +37,6 @@ public class ActorService implements IActorService {
         return actor;
     }
 
-  /*  private void actorExiste(Actor actor, String nombreActor) {
-        if(actor==null){
-            throw new NotFoundException(nombreActor + " NO esta en el sistema.");
-        }
-    }
-*/
     @Override
     public Actor guardarActor(ActorVO actorVO) {
         return guardarActor(actorVO.nombreActor, actorVO.pelicula,actorVO.esEstrella);

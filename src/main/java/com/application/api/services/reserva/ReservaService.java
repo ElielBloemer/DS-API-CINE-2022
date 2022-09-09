@@ -26,11 +26,9 @@ public class ReservaService implements IReservaService, IAccountService {
     private ReservaRepository reservaRepository;
 
     private final Validacion validacion=new Validacion();
-    private EmailSender emailSender;
 
     @Autowired
     public void setEmailSender(EmailSender emailSender){
-        this.emailSender=emailSender;
     }
 
     @Autowired
@@ -58,34 +56,32 @@ public class ReservaService implements IReservaService, IAccountService {
 
     @Override
     public float calcularPrecioReserva(Usuario usuario,Integer descuentoOtorgado, Evento evento,Integer cantidadDeEntradas) {
-        //reserva.setCostoTotal((evento.getPrecio()*cantidadDeEntradas)-(reserva.getDescuentoOtorgado()*cantidadDeEntradas));
         return (evento.getPrecio()*cantidadDeEntradas)-(descuentoOtorgado*cantidadDeEntradas);
     }
 
-    //Me Devuelve el valor que voy a descontar de UNA unica entrada de ahi solo multiplo por el valor de las demas.
+    //TODO
+    // Me Devuelve el valor que voy a descontar de UNA unica entrada de ahi solo multiplo por el valor de las demas.
     @Override
     public float descuentoAOtorgar(Usuario usuario, Evento eventoElegido, Descuento descuento) {
         return descuento.calcularDescuento(usuario,eventoElegido);
     }
 
-    //TODO ACA DEVO MANDAR UNA RESERVA NO NULA!!!!!!!!!!!!
-    // ACA SETEO EL DESCUENTO QUE NECESITO PARA CALCULAR EL PRECIO
+    //TODO ACA DEVO MANDAR UN USUARIO NO NULO!!!!!!!!!!!!
     @Override
-    public ReservaVO obtenerDescuento(ReservaVO reservaVO,Usuario usuario, Evento evento) {
+    public ReservaVO obtenerDescuento(ReservaVO reservaVO,Usuario usuario, Evento evento,Integer cantidadDeEntradas) {
         Descuento descuentoBasico= new DescuentoBasicoService("Descuento Basico");
         Descuento descuentoEstandar= new DescuentoEstandarService("Descuento Estandar");
         Descuento descuentoPremiun= new DescuentoPremiumService("Descuento Premiun");
-
         if(descuentoEstandar.esValido(usuario,evento)){
-            reservaVO.setDescuentoOtorgado(descuentoAOtorgar(usuario,evento,descuentoEstandar));
+            reservaVO.setDescuentoOtorgado(descuentoAOtorgar(usuario,evento,descuentoEstandar)* cantidadDeEntradas);
             reservaVO.setTipoDeDescuento(descuentoEstandar.getNombreDescuento().toUpperCase());
             return reservaVO;
         } else if ((descuentoPremiun.esValido(usuario,evento))) {
-            reservaVO.setDescuentoOtorgado(descuentoAOtorgar(usuario,evento,descuentoEstandar));
+            reservaVO.setDescuentoOtorgado(descuentoAOtorgar(usuario,evento,descuentoEstandar)*cantidadDeEntradas);
             reservaVO.setTipoDeDescuento(descuentoPremiun.getNombreDescuento().toUpperCase());
             return reservaVO;
         }else {
-        reservaVO.setDescuentoOtorgado(descuentoAOtorgar(usuario,evento,descuentoBasico));
+        reservaVO.setDescuentoOtorgado(descuentoAOtorgar(usuario,evento,descuentoBasico)*cantidadDeEntradas);
         reservaVO.setTipoDeDescuento(descuentoBasico.getNombreDescuento().toUpperCase());
         return reservaVO;
         }
@@ -94,7 +90,6 @@ public class ReservaService implements IReservaService, IAccountService {
     @Override
     public String generarIdReserva() {
         String idReserva = "";
-        //idReserva = "";
         int a;
         String CaracteresNoDeseados = "AEIOU";
         for (int i = 0; i < 10; i++) {
@@ -115,14 +110,4 @@ public class ReservaService implements IReservaService, IAccountService {
         }
         return idReserva;
     }
-
-    /*@Override
-    public void sendEmailWithPelicula(String email, ReservaVOwithPeliculaVO reservaVOwithPeliculaVO) throws MessagingException {
-        emailSender.sendEmailWithPelicula("",reservaVOwithPeliculaVO);
-    }
-
-    @Override
-    public void sendEmailWithPartido(String email, ReservaVOPartidoVO reservaVOPartidoVO) throws MessagingException {
-        emailSender.sendEmailWithPartido("",reservaVOPartidoVO);
-    }*/
 }
