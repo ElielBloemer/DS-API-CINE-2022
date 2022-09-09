@@ -34,8 +34,8 @@ public class EmailSender implements IEmailSender {
     public void sendEmailWithPelicula(String email, ReservaVOwithPeliculaVO reservaVOwithPeliculaVO) throws MessagingException {
         SimpleMailMessage message=new SimpleMailMessage();
         message.setFrom(SENDER_ADDRESS);
-        //message.setTo("ebloemercorrea@frba.utn.edu.ar");
-        message.setTo("ruthlazon@gmail.com");
+        message.setTo("ebloemercorrea@frba.utn.edu.ar");
+        //message.setTo("ruthlazon@gmail.com");
         message.setText("Cliente: Ruth Lazon Aguilar"+
         //message.setText("Cliente: Eliel Bloemer "+
                         "\n Reserva number :"+reservaVOwithPeliculaVO.getIdReserva()+" \n Cantidad de Reservas: "+ reservaVOwithPeliculaVO.getCantidadEntradas()+
@@ -43,15 +43,8 @@ public class EmailSender implements IEmailSender {
                         "\n Pelicula: "+reservaVOwithPeliculaVO.pelicula.nombrePelicula+"\n Sala: "+reservaVOwithPeliculaVO.pelicula.identificacionSala+
                         "\n Precio $ "+reservaVOwithPeliculaVO.pelicula.precioEvento+"\n Fecha: "+reservaVOwithPeliculaVO.pelicula.fechaEvento+
                         "\n Costo Total $ "+reservaVOwithPeliculaVO.costoTotal + "\n Muchas gracias por elegirnos.");
-        message.setSubject("Reserva Cinema Bom D+.");
+        message.setSubject("Reserva CineMachine.");
         mailSender.send(message);
-        /*MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, "utf-8");
-        messageHelper.setFrom(SENDER_ADDRESS);
-        messageHelper.setTo("ebloemercorrea@frba.utn.edu.ar");
-        messageHelper.setSubject("Reserva Cine");
-        messageHelper.setText(reservaVOwithPeliculaVO.toString(), true);
-        mailSender.send(mimeMessage);*/
     }
 
     @Override
@@ -59,8 +52,9 @@ public class EmailSender implements IEmailSender {
         SimpleMailMessage message=new SimpleMailMessage();
         message.setFrom(SENDER_ADDRESS);
         //message.setTo("ruthlazon@gmail.com");
-        message.setTo("ebloemercorrea@frba.utn.edu.ar","eliveltonbloemer@gmail.com","ruthlazon@gmail.com");
+        //message.setTo("ebloemercorrea@frba.utn.edu.ar","eliveltonbloemer@gmail.com","ruthlazon@gmail.com");
         //message.setTo("eliveltonbloemer@gmail.com");
+        message.setTo("ebloemercorrea@frba.utn.edu.ar");
         message.setText("Cliente: Elivelton Bloemer Correa"+
                 "\n Reserva number :"+reservaVOPartidoVO.getIdReserva()+" \n Cantidad de Reservas: "+ reservaVOPartidoVO.getCantidadEntradas()+
                 "\n Descuento Otorgado $ "+reservaVOPartidoVO.descuentoOtorgado+"\n Tipo de descuento: "+reservaVOPartidoVO.tipoDeDescuento+
@@ -68,7 +62,7 @@ public class EmailSender implements IEmailSender {
                 "\n Sala: "+reservaVOPartidoVO.partido.getIdSala()+
                 "\n Precio $ "+reservaVOPartidoVO.partido.precioEvento+"\n Fecha: "+reservaVOPartidoVO.partido.fechaEvento+
                 "\n Costo Total $ "+reservaVOPartidoVO.costoTotal + "\n Muchas gracias por elegirnos.");
-        message.setSubject("Reserva Cinema Bom D+.");
+        message.setSubject("Reserva CineMachine.");
         mailSender.send(message);
     }
 }

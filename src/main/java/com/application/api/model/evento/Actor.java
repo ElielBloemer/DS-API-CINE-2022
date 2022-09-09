@@ -19,7 +19,6 @@ public class Actor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Pelicula pelicula;
-    //private String nombrePelicula;
     private boolean esEstrella;
     public Actor(String nombreActor,boolean esEstrella,Pelicula pelicula) {
         this.nombreActor = nombreActor;

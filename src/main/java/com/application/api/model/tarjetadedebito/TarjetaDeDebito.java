@@ -20,7 +20,6 @@ public class TarjetaDeDebito {
     private String numeroTarjetaDeDebito;
     private String titular;
     private float dineroDisponibleMonedaLocal;
-    private String monedaNacional;
     private float dineroDisponibleMonedaExtranjera;
     private String monedaExtranjera;
 
@@ -28,7 +27,7 @@ public class TarjetaDeDebito {
         this.numeroTarjetaDeDebito = numeroTarjetaDeDebito;
         this.titular = titular;
         this.dineroDisponibleMonedaLocal = dineroDisponibleMonedaLocal;
-        this.monedaNacional = monedaNacional;
+        //this.monedaNacional = monedaNacional;
         this.dineroDisponibleMonedaExtranjera = dineroDisponibleMonedaExtranjera;
         this.monedaExtranjera = monedaExtranjera;
     }

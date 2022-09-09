@@ -21,7 +21,7 @@ public interface IReservaService {
 
     float descuentoAOtorgar(Usuario usuario, Evento eventoElegido, Descuento descuento);
 
-    public ReservaVO obtenerDescuento(ReservaVO reserva,Usuario usuario, Evento evento);
+    public ReservaVO obtenerDescuento(ReservaVO reserva,Usuario usuario, Evento evento,Integer cantidadDeEntradas);
     public String generarIdReserva();
 
 }
