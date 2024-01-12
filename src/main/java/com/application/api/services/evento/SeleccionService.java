@@ -2,15 +2,14 @@ package com.application.api.services.evento;
 
 import com.application.api.model.evento.Jugador;
 import com.application.api.model.evento.Seleccion;
-import com.application.api.persistance.JugadorRepository;
 import com.application.api.persistance.SeleccionRepository;
 import com.application.api.services.interfaces.ISeleccionService;
 import com.application.api.vo.SeleccionVO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
-import java.util.List;
 
 @Service
 public class SeleccionService implements ISeleccionService {
@@ -40,6 +39,7 @@ public class SeleccionService implements ISeleccionService {
         Seleccion nuevaSeleccion = seleccionRepository.findByNombrePais(nombrePais.toUpperCase());
         estaEnElSistema(nuevaSeleccion,nombrePais);
         // String continenteMayusculo=continente.toUpperCase();
+        seleccionGuardado(nombrePais);
         return seleccionRepository.save(new Seleccion(nombrePais.toUpperCase(),continente.toUpperCase(),jugadores,mundialesGanados));
     }
 
@@ -80,6 +80,10 @@ public class SeleccionService implements ISeleccionService {
             if(nombrePais.equals("STRING")){
                 throw new NotFoundException("Nombre INVALIDO para la seleccion");
             }
+    }
+
+    private void seleccionGuardado(String nombreDato){
+        System.out.print("                  "+nombreDato.toUpperCase() + " esta creado con exito!");
     }
 
     public void seleccionExiste(Seleccion seleccion,String nombreSelecion){

@@ -1,15 +1,14 @@
 package com.application.api.services.evento;
 
-import com.application.api.model.evento.Pelicula;
-import com.application.api.persistance.PeliculaRepository;
-import com.application.api.vo.ActorVO;
 import com.application.api.model.evento.Actor;
+import com.application.api.model.evento.Pelicula;
 import com.application.api.persistance.ActorRepository;
+import com.application.api.persistance.PeliculaRepository;
 import com.application.api.services.interfaces.IActorService;
+import com.application.api.vo.ActorVO;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
-import java.util.List;
 
 //Essa capa eu divido das capas de servicio com persistencia, etc.
 @Service
@@ -48,7 +47,12 @@ public class ActorService implements IActorService {
         validacion(pelicula,nombrePelicula," NO figura en el sistema, POR FAVOR inserte la pelicula PRIMERO.");
         Actor actor = actorRepository.findByNombreActor(nombre.toUpperCase());
         estaEnElSistemaElActor(actor,nombre);
+        ActorLog(nombre);
         return actorRepository.save(new Actor(nombre.toUpperCase(),esEstrella,pelicula));
+    }
+
+    private void ActorLog(String nombreDato){
+        System.out.print("                  "+nombreDato.toUpperCase() + " esta creado con exito!");
     }
 
     private void validacion(Object object, String nombrePelicula,String mensajeAMostrarPorConsola) {

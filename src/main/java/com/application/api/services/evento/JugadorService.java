@@ -53,6 +53,7 @@ public class JugadorService implements IJugadorService {
          Seleccion seleccion=seleccionRepository.findByNombrePais(nombreSeleccion.toUpperCase());
          objectoExiste(seleccion,nombreSeleccion);
          estaEnElSistema(jugador,nombre.toUpperCase());
+         jugadorGuardado(nombre.toUpperCase());
         return jugadorRepository.save(new Jugador(nombre.toUpperCase(),esEstrella,seleccion));
     }
 
@@ -60,6 +61,10 @@ public class JugadorService implements IJugadorService {
         if(seleccion==null)
             throw new NotFoundException("La Seleccion com nombre "+nombreSeleccionMayusculo+" no existe en el sistema");
     }*/
+    
+    private void jugadorGuardado(String nombreDato){
+        System.out.print("                  "+nombreDato.toUpperCase() + " esta creado con exito!");
+    }
 
     private void estaEnElSistema(Object object, String nombreDato) {
         if(object!=null)

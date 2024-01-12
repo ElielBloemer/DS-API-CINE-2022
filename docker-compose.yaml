@@ -23,8 +23,28 @@ services:
                         PMA_PORT: 3306
                         PMA_ARBITRARY: 1
                 ports:
-                        - "8081:80"
+                        - "8082:80"
                
                 volumes:
                         - "/opt/phpmyadmin/sessions:/sessions"
                         - "/opt/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
+
+        api:
+                container_name:  apijava
+                build: 
+                        context: .
+                        dockerfile: Dockerfile
+                environment:
+                        - DB_HOST=${DB_HOST}
+                        - DB_USER=${DB_USER}
+                        - DB_PASS=${DB_PASS}
+                ports:
+                        - "8080:8080"
+                env_file:
+                        - .env
+                volumes:
+                        - "./logs/api:/logs"
+
+#Comando para buildear con maven
+#mvn clean package -DskipTest
+#locahost:8080/swagger-ui.hmtl
