@@ -29,22 +29,36 @@ services:
                         - "/opt/phpmyadmin/sessions:/sessions"
                         - "/opt/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
 
+        # api:
+        #         container_name:  apijava
+        #         build: 
+        #                 context: .
+        #                 dockerfile: Dockerfile
+        #         environment:
+        #                 - DB_HOST=${DB_HOST}
+        #                 - DB_USER=${DB_USER}
+        #                 - DB_PASS=${DB_PASS}
+        #         ports:
+        #                 - "8080:8080"
+        #         env_file:
+        #                 - .env
+        #         volumes:
+        #                 - "./logs/api:/logs"
+
         api:
                 container_name:  apijava
-                build: 
-                        context: .
-                        dockerfile: Dockerfile
+                image: ebloemer/api-cine-disenio
                 environment:
-                        - DB_HOST=${DB_HOST}
-                        - DB_USER=${DB_USER}
-                        - DB_PASS=${DB_PASS}
+                          DB_HOST: mysql:3306/db_cine
+                          DB_USER: springuser
+                          DB_PASS: disenio
                 ports:
                         - "8080:8080"
-                env_file:
-                        - .env
-                volumes:
-                        - "./logs/api:/logs"
+                # env_file:
+                #         - .env
+                # volumes:
+                #         - "./logs/api:/logs"                
 
 #Comando para buildear con maven
-#mvn clean package -DskipTest
+#mvn clean package -DskipTests
 #locahost:8080/swagger-ui.hmtl
