@@ -19,8 +19,9 @@ services:
                 container_name: phpmyadmin
 
                 environment:
-                        PMA_HOST: mysql
-                        PMA_PORT: 3306
+                        #PMA_HOST: mysql
+                        PMA_HOST: 35.224.16.245
+                        #PMA_PORT: 3306
                         PMA_ARBITRARY: 1
                 ports:
                         - "8082:80"
@@ -49,7 +50,7 @@ services:
                 container_name:  apijava
                 image: ebloemer/api-cine-disenio
                 environment:
-                          DB_HOST: mysql:3306/db_cine
+                          DB_HOST: 35.224.16.245/db_cine
                           DB_USER: springuser
                           DB_PASS: disenio
                 ports:
